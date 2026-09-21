@@ -1,6 +1,15 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { contactForm } from "@/content/site";
 import type { ContactRow } from "@/features/contact/server/list-contacts";
 import { buttonClass } from "@/components/styles";
@@ -12,113 +21,206 @@ const dateFormatter = new Intl.DateTimeFormat("es-CL", {
   timeZone: "America/Santiago",
 });
 
+function formatDate(value: string) {
+  return dateFormatter.format(new Date(value));
+}
+
 function reasonLabel(reason: string) {
   return (
     contactForm.reasons.find((item) => item.value === reason)?.label ?? reason
   );
 }
 
-function formatDate(value: string) {
-  return dateFormatter.format(new Date(value));
-}
+const columnHelper = createColumnHelper<ContactRow>();
 
 export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
-  const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<ContactRow | null>(null);
+  const [globalFilter, setGlobalFilter] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  const filtered = useMemo(() => {
-    const term = query.trim().toLowerCase();
+  const openDetail = useCallback((contact: ContactRow) => {
+    setSelected(contact);
+    dialogRef.current?.showModal();
+  }, []);
 
-    if (!term) {
-      return contacts;
-    }
+  const closeDetail = useCallback(() => {
+    dialogRef.current?.close();
+    setSelected(null);
+  }, []);
 
-    return contacts.filter((contact) =>
-      [
+  const columns = useMemo(
+    () => [
+      columnHelper.accessor("created_at", {
+        header: "Fecha",
+        cell: (info) => (
+          <span className="whitespace-nowrap">{formatDate(info.getValue())}</span>
+        ),
+      }),
+      columnHelper.accessor("name", {
+        header: "Nombre",
+        cell: (info) => (
+          <span className="font-semibold text-ink">{info.getValue()}</span>
+        ),
+      }),
+      columnHelper.accessor(
+        (row) => [row.email, row.phone].filter(Boolean).join(" · "),
+        {
+          id: "contact",
+          header: "Contacto",
+        },
+      ),
+      columnHelper.accessor((row) => reasonLabel(row.reason), {
+        id: "reason",
+        header: "Motivo",
+      }),
+      columnHelper.display({
+        id: "actions",
+        header: "",
+        enableSorting: false,
+        cell: ({ row }) => (
+          <div className="text-right">
+            <button
+              type="button"
+              onClick={() => openDetail(row.original)}
+              className="cursor-pointer font-semibold text-ink-soft transition-colors hover:text-ink"
+            >
+              Ver
+            </button>
+          </div>
+        ),
+      }),
+    ],
+    [openDetail],
+  );
+
+  // eslint-disable-next-line react-hooks/incompatible-library -- TanStack Table no es compatible con React Compiler
+  const table = useReactTable({
+    data: contacts,
+    columns,
+    state: { globalFilter },
+    onGlobalFilterChange: setGlobalFilter,
+    globalFilterFn: (row, _columnId, filterValue) => {
+      const term = String(filterValue).toLowerCase();
+      const contact = row.original;
+
+      return [
         contact.name,
         contact.email,
         contact.phone,
         contact.message,
         reasonLabel(contact.reason),
-      ].some((value) => value?.toLowerCase().includes(term)),
-    );
-  }, [contacts, query]);
+      ].some((value) => value?.toLowerCase().includes(term));
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    initialState: {
+      sorting: [{ id: "created_at", desc: true }],
+      pagination: { pageSize: 10 },
+    },
+  });
 
-  function openDetail(contact: ContactRow) {
-    setSelected(contact);
-    dialogRef.current?.showModal();
-  }
-
-  function closeDetail() {
-    dialogRef.current?.close();
-    setSelected(null);
-  }
+  const rows = table.getRowModel().rows;
+  const sortIndicator = { asc: " ↑", desc: " ↓" } as const;
 
   return (
     <div>
       <input
         type="search"
-        value={query}
-        onChange={(event) => setQuery(event.target.value)}
+        value={globalFilter}
+        onChange={(event) => setGlobalFilter(event.target.value)}
         placeholder="Buscar por nombre, contacto o mensaje…"
         aria-label="Buscar contactos"
         className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-ink outline-none focus:border-primary"
       />
 
-      {filtered.length === 0 ? (
-        <p className="mt-4 rounded-2xl border border-border bg-surface px-4 py-6 text-center text-ink-soft">
-          No se encontraron contactos.
-        </p>
-      ) : (
-        <div className="mt-4 overflow-x-auto rounded-2xl border border-border bg-surface">
-          <table className="w-full text-left text-sm">
-            <thead className="bg-primary-soft text-ink">
-              <tr>
-                <th className="px-4 py-3 font-semibold">Fecha</th>
-                <th className="px-4 py-3 font-semibold">Nombre</th>
-                <th className="px-4 py-3 font-semibold">Contacto</th>
-                <th className="px-4 py-3 font-semibold">Motivo</th>
-                <th className="px-4 py-3 font-semibold">
-                  <span className="sr-only">Acciones</span>
-                </th>
+      <div className="mt-4 overflow-x-auto rounded-2xl border border-border bg-surface">
+        <table className="w-full text-left text-sm">
+          <thead className="bg-primary-soft text-ink">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className="px-4 py-3 font-semibold whitespace-nowrap"
+                  >
+                    {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                      <button
+                        type="button"
+                        onClick={header.column.getToggleSortingHandler()}
+                        className="cursor-pointer select-none"
+                      >
+                        {flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                        {sortIndicator[
+                          header.column.getIsSorted() as keyof typeof sortIndicator
+                        ] ?? ""}
+                      </button>
+                    ) : (
+                      flexRender(
+                        header.column.columnDef.header,
+                        header.getContext(),
+                      )
+                    )}
+                  </th>
+                ))}
               </tr>
-            </thead>
-            <tbody>
-              {filtered.map((contact) => (
-                <tr key={contact.id} className="border-t border-border">
-                  <td className="px-4 py-3 whitespace-nowrap text-ink-soft">
-                    {formatDate(contact.created_at)}
-                  </td>
-                  <td className="px-4 py-3 font-semibold text-ink">
-                    {contact.name}
-                  </td>
-                  <td className="px-4 py-3 text-ink-soft">
-                    {contact.email ? (
-                      <span className="block">{contact.email}</span>
-                    ) : null}
-                    {contact.phone ? (
-                      <span className="block">{contact.phone}</span>
-                    ) : null}
-                  </td>
-                  <td className="px-4 py-3 text-ink-soft">
-                    {reasonLabel(contact.reason)}
-                  </td>
-                  <td className="px-4 py-3 text-right">
-                    <button
-                      type="button"
-                      onClick={() => openDetail(contact)}
-                      className="cursor-pointer font-semibold text-ink-soft transition-colors hover:text-ink"
-                    >
-                      Ver
-                    </button>
-                  </td>
+            ))}
+          </thead>
+          <tbody>
+            {rows.length === 0 ? (
+              <tr className="border-t border-border">
+                <td
+                  colSpan={columns.length}
+                  className="px-4 py-6 text-center text-ink-soft"
+                >
+                  No se encontraron contactos.
+                </td>
+              </tr>
+            ) : (
+              rows.map((row) => (
+                <tr key={row.id} className="border-t border-border">
+                  {row.getVisibleCells().map((cell) => (
+                    <td key={cell.id} className="px-4 py-3 text-ink-soft">
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </td>
+                  ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {table.getPageCount() > 1 ? (
+        <div className="mt-4 flex items-center justify-between gap-3 text-sm text-ink-soft">
+          <span>
+            Página {table.getState().pagination.pageIndex + 1} de{" "}
+            {table.getPageCount()}
+          </span>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+              className="cursor-pointer rounded-full border border-border px-4 py-1.5 font-semibold transition-colors hover:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Anterior
+            </button>
+            <button
+              type="button"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+              className="cursor-pointer rounded-full border border-border px-4 py-1.5 font-semibold transition-colors hover:border-primary disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Siguiente
+            </button>
+          </div>
         </div>
-      )}
+      ) : null}
 
       <dialog
         ref={dialogRef}
