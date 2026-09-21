@@ -9,3 +9,9 @@ export const cardTitleClass = "text-lg font-bold text-ink";
 export const cardBodyClass = "text-ink-soft";
 
 export const actionCardClass = `${cardClass} flex items-center gap-4 transition-colors hover:border-primary`;
+
+export function fieldClass(hasError: boolean) {
+  return `w-full rounded-xl border bg-surface px-4 py-2.5 text-ink outline-none focus:border-primary ${
+    hasError ? "border-danger" : "border-border"
+  }`;
+}

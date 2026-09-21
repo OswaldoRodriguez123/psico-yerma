@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { parsePhone } from "@/lib/phone";
 
 export const contactReasons = [
   "consulta",
@@ -7,12 +8,6 @@ export const contactReasons = [
   "talleres",
   "otro",
 ] as const;
-
-export function parsePhone(input: string): string | null {
-  const cleaned = input.replace(/[\s.()-]/g, "");
-
-  return /^\+?\d{7,15}$/.test(cleaned) ? cleaned : null;
-}
 
 export const contactSchema = z
   .object({

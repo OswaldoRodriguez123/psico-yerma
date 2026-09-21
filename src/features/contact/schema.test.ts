@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { contactSchema, parsePhone } from "./schema";
+import { contactSchema } from "./schema";
+import { parsePhone } from "@/lib/phone";
 
 const validContact = {
   name: "Ana Pérez",

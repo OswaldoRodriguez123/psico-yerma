@@ -4,7 +4,7 @@ import { useCallback, useState, type FormEvent } from "react";
 import { contactForm } from "@/content/site";
 import { contactSchema } from "@/features/contact/schema";
 import { TurnstileWidget } from "@/features/contact/components/TurnstileWidget";
-import { buttonClass } from "@/components/styles";
+import { buttonClass, fieldClass } from "@/components/styles";
 import { ChevronDownIcon } from "@/components/ui/icons";
 
 type Status = "idle" | "submitting" | "success" | "error";
@@ -322,12 +322,6 @@ export function ContactForm({
       </p>
     </form>
   );
-}
-
-function fieldClass(hasError: boolean) {
-  return `w-full rounded-xl border bg-surface px-4 py-2.5 text-ink outline-none focus:border-primary ${
-    hasError ? "border-danger" : "border-border"
-  }`;
 }
 
 function FieldError({ id, message }: { id: string; message?: string }) {
