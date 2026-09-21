@@ -25,6 +25,7 @@ export function ContactStatusSelect({
       value={status}
       disabled={isPending}
       aria-label="Estado del contacto"
+      wrapperClassName="inline-block"
       onChange={(event) => {
         const next = event.target.value;
         startTransition(() => updateContactStatusAction(id, next));

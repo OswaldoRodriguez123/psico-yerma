@@ -21,7 +21,7 @@ export function Select({
   ...props
 }: SelectProps) {
   return (
-    <span className={`relative block ${wrapperClassName}`}>
+    <span className={`relative ${wrapperClassName}`}>
       <select
         {...props}
         style={{ paddingRight: paddings[size], ...style }}

@@ -148,6 +148,7 @@ export function DataTable<TData>({
               <span className="sr-only">Filas por página</span>
               <Select
                 size="sm"
+                wrapperClassName="inline-block"
                 value={table.getState().pagination.pageSize}
                 onChange={(event) =>
                   table.setPageSize(Number(event.target.value))

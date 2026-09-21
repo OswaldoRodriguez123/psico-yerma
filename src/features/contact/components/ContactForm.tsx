@@ -250,7 +250,7 @@ export function ContactForm({
           defaultValue=""
           aria-invalid={Boolean(errors.reason)}
           aria-describedby={errors.reason ? "reason-error" : undefined}
-          wrapperClassName="mt-1"
+          wrapperClassName="mt-1 block"
           className={fieldClass(Boolean(errors.reason))}
         >
           <option value="" disabled>
