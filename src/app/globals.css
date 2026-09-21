@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+/*
+ * Sistema de color de psico.yerma
+ *
+ * Cada color cumple UN rol. Para cambiar la paleta basta con editar los
+ * valores de `--brand-*`: Tailwind genera las utilidades (bg-primary,
+ * text-ink, border-border, ...) a partir de estos.
+ *
+ * Neutros     -> base de la pagina (fondos, texto, bordes)
+ * Primario    -> identidad y enfasis (lavanda)
+ * Acento      -> acciones principales / CTA (durazno)
+ * Semanticos  -> solo estados de exito y error
+ */
+:root {
+  /* Neutros */
+  --brand-cream: #fdfbf7;
+  --brand-surface: #ffffff;
+  --brand-ink: #3e3a4a;
+  --brand-ink-soft: #6c6880;
+  --brand-border: #ece7f3;
+
+  /* Primario (lavanda) */
+  --brand-primary: #c3b4e0;
+  --brand-primary-soft: #efeaf8;
+
+  /* Semanticos */
+  --brand-success: #4f9b7c;
+  --brand-success-soft: #e3f2ec;
+  --brand-danger: #b4534a;
+  --brand-danger-soft: #fbe9e5;
+}
+
+@theme inline {
+  --color-cream: var(--brand-cream);
+  --color-surface: var(--brand-surface);
+  --color-ink: var(--brand-ink);
+  --color-ink-soft: var(--brand-ink-soft);
+  --color-border: var(--brand-border);
+
+  --color-primary: var(--brand-primary);
+  --color-primary-soft: var(--brand-primary-soft);
+
+  --color-success: var(--brand-success);
+  --color-success-soft: var(--brand-success-soft);
+  --color-danger: var(--brand-danger);
+  --color-danger-soft: var(--brand-danger-soft);
+
+  --font-sans: var(--font-nunito);
+}
+
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
