@@ -20,6 +20,7 @@ export default function ContactPage() {
   const { whatsapp, email, location } = site.contact;
   const whatsappHref = getWhatsappHref();
   const mailtoHref = getMailtoHref();
+  const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY;
 
   return (
     <>
@@ -70,7 +71,7 @@ export default function ContactPage() {
         <div className={cardClass}>
           <h2 className={cardTitleClass}>{contactForm.title}</h2>
           <div className="mt-5">
-            <ContactForm />
+            <ContactForm turnstileSiteKey={turnstileSiteKey} />
           </div>
         </div>
       </section>

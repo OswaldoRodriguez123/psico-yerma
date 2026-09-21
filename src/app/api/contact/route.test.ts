@@ -56,6 +56,16 @@ describe("POST /api/contact", () => {
     expect(response.status).toBe(500);
   });
 
+  it("responde 400 con el error de captcha cuando falla Turnstile", async () => {
+    mocks.createContact.mockResolvedValue({ ok: false, reason: "captcha" });
+
+    const response = await POST(requestWith({}));
+    const body = await response.json();
+
+    expect(response.status).toBe(400);
+    expect(body.fieldErrors.turnstileToken).toBeTruthy();
+  });
+
   it("responde 201 cuando el contacto se crea", async () => {
     mocks.createContact.mockResolvedValue({ ok: true });
 

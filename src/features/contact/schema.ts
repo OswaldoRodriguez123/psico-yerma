@@ -49,6 +49,8 @@ export const contactSchema = z
       .trim()
       .min(10, "Cuéntame un poco más (mínimo 10 caracteres).")
       .max(2000, "Máximo 2000 caracteres."),
+    company: z.string().optional(),
+    turnstileToken: z.string().optional(),
   })
   .refine((data) => Boolean(data.email || data.phone), {
     message: "Déjanos un correo o un teléfono para poder responderte.",

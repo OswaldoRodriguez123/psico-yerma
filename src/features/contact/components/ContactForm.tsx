@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useCallback, useState, type FormEvent } from "react";
 import { contactForm } from "@/content/site";
 import { contactSchema } from "@/features/contact/schema";
+import { TurnstileWidget } from "@/features/contact/components/TurnstileWidget";
 import { buttonClass } from "@/components/styles";
 import { ChevronDownIcon } from "@/components/ui/icons";
 
@@ -19,10 +20,11 @@ function readPayload(form: HTMLFormElement) {
     phone: String(data.get("phone") ?? ""),
     reason: String(data.get("reason") ?? ""),
     message: String(data.get("message") ?? ""),
+    company: String(data.get("company") ?? ""),
   };
 }
 
-function validate(payload: ReturnType<typeof readPayload>) {
+function validate(payload: unknown) {
   const result = contactSchema.safeParse(payload);
 
   if (result.success) {
@@ -55,17 +57,32 @@ function focusFirstError(fieldErrors: Record<string, string>) {
   element?.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 
-export function ContactForm() {
+export function ContactForm({
+  turnstileSiteKey,
+}: {
+  turnstileSiteKey?: string;
+}) {
   const [status, setStatus] = useState<Status>("idle");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [notice, setNotice] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [turnstileKey, setTurnstileKey] = useState(0);
+
+  const handleTurnstileToken = useCallback((token: string) => {
+    setTurnstileToken(token);
+  }, []);
+
+  function resetTurnstile() {
+    setTurnstileToken("");
+    setTurnstileKey((key) => key + 1);
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     const form = event.currentTarget;
-    const payload = readPayload(form);
+    const payload = { ...readPayload(form), turnstileToken };
 
     setHasSubmitted(true);
 
@@ -99,6 +116,7 @@ export function ContactForm() {
         setStatus("error");
         setNotice(result?.error ?? contactForm.errorMessage);
         focusFirstError(serverErrors);
+        resetTurnstile();
         return;
       }
 
@@ -108,6 +126,7 @@ export function ContactForm() {
     } catch {
       setStatus("error");
       setNotice(contactForm.errorMessage);
+      resetTurnstile();
     }
   }
 
@@ -116,7 +135,9 @@ export function ContactForm() {
       return;
     }
 
-    const nextErrors = validate(readPayload(event.currentTarget));
+    const nextErrors = validate(
+      readPayload(event.currentTarget),
+    );
 
     setErrors(nextErrors);
 
@@ -147,6 +168,20 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit} onChange={handleChange} noValidate className="space-y-5">
       <p className="text-sm text-ink-soft">{contactForm.contactHint}</p>
+
+      <div
+        className="absolute -left-[9999px] h-0 w-0 overflow-hidden"
+        aria-hidden="true"
+      >
+        <label htmlFor="company">No completar este campo</label>
+        <input
+          id="company"
+          name="company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
 
       <div>
         <label htmlFor="name" className="block font-semibold text-ink">
@@ -255,6 +290,17 @@ export function ContactForm() {
           </p>
         )}
       </div>
+
+      {turnstileSiteKey ? (
+        <div>
+          <TurnstileWidget
+            key={turnstileKey}
+            siteKey={turnstileSiteKey}
+            onToken={handleTurnstileToken}
+          />
+          <FieldError id="turnstile-error" message={errors.turnstileToken} />
+        </div>
+      ) : null}
 
       <button
         type="submit"

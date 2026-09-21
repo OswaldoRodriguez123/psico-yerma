@@ -21,6 +21,18 @@ export async function POST(request: Request) {
     );
   }
 
+  if (!result.ok && result.reason === "captcha") {
+    return Response.json(
+      {
+        error: "Verifica que no eres un robot e inténtalo de nuevo.",
+        fieldErrors: {
+          turnstileToken: "Verifica que no eres un robot.",
+        },
+      },
+      { status: 400 },
+    );
+  }
+
   if (!result.ok) {
     return Response.json(
       { error: "No pudimos enviar tu mensaje. Inténtalo más tarde." },

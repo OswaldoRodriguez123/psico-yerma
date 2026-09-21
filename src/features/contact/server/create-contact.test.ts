@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 const mocks = vi.hoisted(() => ({
   insert: vi.fn(),
   sendContactNotification: vi.fn(),
+  verifyTurnstile: vi.fn(),
 }));
 
 vi.mock("@/lib/supabase", () => ({
@@ -13,6 +14,10 @@ vi.mock("@/lib/supabase", () => ({
 
 vi.mock("@/features/contact/server/send-notification", () => ({
   sendContactNotification: mocks.sendContactNotification,
+}));
+
+vi.mock("@/features/contact/server/verify-turnstile", () => ({
+  verifyTurnstile: mocks.verifyTurnstile,
 }));
 
 import { createContact } from "./create-contact";
@@ -29,6 +34,7 @@ describe("createContact", () => {
   beforeEach(() => {
     mocks.insert.mockReset().mockResolvedValue({ error: null });
     mocks.sendContactNotification.mockReset().mockResolvedValue(undefined);
+    mocks.verifyTurnstile.mockReset().mockResolvedValue(true);
     vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
@@ -118,5 +124,27 @@ describe("createContact", () => {
 
     expect(result.ok).toBe(true);
     expect(mocks.insert).toHaveBeenCalledOnce();
+  });
+
+  it("ignora en silencio si se completó el honeypot", async () => {
+    const result = await createContact({ ...validContact, company: "spam" });
+
+    expect(result.ok).toBe(true);
+    expect(mocks.insert).not.toHaveBeenCalled();
+    expect(mocks.sendContactNotification).not.toHaveBeenCalled();
+  });
+
+  it("rechaza si falla la verificación de Turnstile", async () => {
+    mocks.verifyTurnstile.mockResolvedValue(false);
+
+    const result = await createContact(validContact);
+
+    expect(result.ok).toBe(false);
+
+    if (!result.ok) {
+      expect(result.reason).toBe("captcha");
+    }
+
+    expect(mocks.insert).not.toHaveBeenCalled();
   });
 });

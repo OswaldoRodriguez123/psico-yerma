@@ -32,6 +32,8 @@ SUPABASE_SERVICE_ROLE_KEY=
 RESEND_API_KEY=
 CONTACT_FROM_EMAIL=onboarding@resend.dev
 CONTACT_TO_EMAIL=
+TURNSTILE_SITE_KEY=
+TURNSTILE_SECRET_KEY=
 ```
 
 - `SUPABASE_SERVICE_ROLE_KEY` es secreta y solo se usa en el servidor (nunca con prefijo `NEXT_PUBLIC_`).

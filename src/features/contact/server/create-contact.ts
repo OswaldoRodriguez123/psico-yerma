@@ -1,10 +1,12 @@
 import { contactSchema } from "@/features/contact/schema";
 import { sendContactNotification } from "@/features/contact/server/send-notification";
+import { verifyTurnstile } from "@/features/contact/server/verify-turnstile";
 import { getSupabaseAdmin } from "@/lib/supabase";
 
 export type CreateContactResult =
   | { ok: true }
   | { ok: false; reason: "invalid"; fieldErrors: Record<string, string> }
+  | { ok: false; reason: "captcha" }
   | { ok: false; reason: "server" };
 
 export async function createContact(
@@ -26,7 +28,16 @@ export async function createContact(
     return { ok: false, reason: "invalid", fieldErrors };
   }
 
-  const { name, email, phone, reason, message } = parsed.data;
+  const { name, email, phone, reason, message, company, turnstileToken } =
+    parsed.data;
+
+  if (company) {
+    return { ok: true };
+  }
+
+  if (!(await verifyTurnstile(turnstileToken))) {
+    return { ok: false, reason: "captcha" };
+  }
 
   try {
     const supabase = getSupabaseAdmin();
