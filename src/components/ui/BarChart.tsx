@@ -52,7 +52,7 @@ export function BarChart({ data }: { data: Datum[] }) {
           />
           <Bar
             dataKey="Contactos"
-            fill="var(--brand-primary)"
+            fill="#a78bda"
             radius={[8, 8, 0, 0]}
             maxBarSize={48}
           />

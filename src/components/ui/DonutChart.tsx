@@ -10,12 +10,12 @@ import {
 } from "recharts";
 
 const colors = [
-  "#c3b4e0",
-  "#a98fd6",
-  "#8f76c9",
-  "#d8c9ef",
-  "#7a6bb0",
-  "#b9c7e8",
+  "#a78bda", // lavanda
+  "#6ec1b3", // verde agua
+  "#f0a58f", // durazno
+  "#f2cf7a", // amarillo suave
+  "#7fa8de", // azul
+  "#e79ab0", // rosa
 ];
 
 type Datum = { label: string; value: number };
