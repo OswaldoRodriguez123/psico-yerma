@@ -42,19 +42,12 @@ const contactFilter: FilterFn<ContactRow> = (row, _columnId, filterValue) => {
 const columnHelper = createColumnHelper<ContactRow>();
 
 export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
-  const [statusFilter, setStatusFilter] = useState("not-new");
+  const [statusFilter, setStatusFilter] = useState("new");
 
-  const filteredContacts = useMemo(() => {
-    if (statusFilter === "all") {
-      return contacts;
-    }
-
-    if (statusFilter === "not-new") {
-      return contacts.filter((contact) => contact.status !== "new");
-    }
-
-    return contacts.filter((contact) => contact.status === statusFilter);
-  }, [contacts, statusFilter]);
+  const filteredContacts = useMemo(
+    () => contacts.filter((contact) => contact.status === statusFilter),
+    [contacts, statusFilter],
+  );
 
   const columns = useMemo(
     () => [
@@ -165,7 +158,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
       globalFilterFn={contactFilter}
       initialSorting={[{ id: "created_at", desc: true }]}
       searchPlaceholder="Buscar por nombre, contacto o mensaje…"
-      emptyMessage="No hay contactos con este filtro."
+      emptyMessage="No hay contactos en este estado."
       toolbarAction={
         <Select
           size="sm"
@@ -174,11 +167,9 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
           aria-label="Filtrar por estado"
           className="cursor-pointer rounded-lg border border-border bg-surface py-2 pl-3 text-ink"
         >
-          <option value="not-new">No nuevos</option>
           <option value="new">Nuevos</option>
           <option value="contacted">Contactados</option>
           <option value="closed">Cerrados</option>
-          <option value="all">Todos</option>
         </Select>
       }
     />
