@@ -1,7 +1,7 @@
 import { contactSchema } from "@/features/contact/schema";
 import { sendContactNotification } from "@/features/contact/server/send-notification";
 import { verifyTurnstile } from "@/features/contact/server/verify-turnstile";
-import { getSupabaseAdmin } from "@/lib/supabase";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 
 export type CreateContactResult =
   | { ok: true }

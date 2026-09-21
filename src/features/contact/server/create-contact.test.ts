@@ -6,7 +6,7 @@ const mocks = vi.hoisted(() => ({
   verifyTurnstile: vi.fn(),
 }));
 
-vi.mock("@/lib/supabase", () => ({
+vi.mock("@/lib/supabase/admin", () => ({
   getSupabaseAdmin: () => ({
     from: () => ({ insert: mocks.insert }),
   }),

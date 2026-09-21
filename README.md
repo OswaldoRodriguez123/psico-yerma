@@ -28,6 +28,7 @@ Copia `.env.example` a `.env.local` y completa los valores:
 
 ```
 SUPABASE_URL=
+SUPABASE_ANON_KEY=
 SUPABASE_SERVICE_ROLE_KEY=
 RESEND_API_KEY=
 CONTACT_FROM_EMAIL=onboarding@resend.dev
