@@ -128,14 +128,15 @@ export function DataTable<TData>({
         </table>
       </div>
 
-      {table.getPageCount() > 1 ? (
+      {table.getFilteredRowModel().rows.length > 0 ? (
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-ink-soft">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <span>
-              Página {table.getState().pagination.pageIndex + 1} de{" "}
+              Total: {table.getFilteredRowModel().rows.length} · Página{" "}
+              {table.getState().pagination.pageIndex + 1} de{" "}
               {table.getPageCount()}
             </span>
-            <label className="flex items-center gap-1">
+            <label className="flex items-center gap-1.5">
               <span className="sr-only">Filas por página</span>
               <select
                 value={table.getState().pagination.pageSize}
