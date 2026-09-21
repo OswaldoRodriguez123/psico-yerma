@@ -27,7 +27,7 @@ Abre http://localhost:3000
 Copia `.env.example` a `.env.local` y completa los valores:
 
 ```
-NEXT_PUBLIC_SUPABASE_URL=
+SUPABASE_URL=
 SUPABASE_SERVICE_ROLE_KEY=
 RESEND_API_KEY=
 CONTACT_FROM_EMAIL=onboarding@resend.dev
