@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { createColumnHelper } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/DataTable";
+import { AddClientDialog } from "@/features/clients/components/AddClientDialog";
 import type { ClientRow } from "@/features/clients/server/list-clients";
 
 const dateFormatter = new Intl.DateTimeFormat("es-CL", {
@@ -100,6 +101,7 @@ export function ClientsTable({ clients }: { clients: ClientRow[] }) {
       initialSorting={[{ id: "created_at", desc: true }]}
       searchPlaceholder="Buscar por representante, paciente o notas…"
       emptyMessage="Aún no hay clientes registrados."
+      toolbarAction={<AddClientDialog />}
     />
   );
 }

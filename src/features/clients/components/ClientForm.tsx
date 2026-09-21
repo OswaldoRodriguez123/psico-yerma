@@ -7,7 +7,7 @@ import {
 } from "@/features/clients/actions";
 import { buttonClass, fieldClass } from "@/components/styles";
 
-export function ClientForm() {
+export function ClientForm({ onSuccess }: { onSuccess?: () => void }) {
   const [state, formAction, isPending] = useActionState<
     ClientFormState,
     FormData
@@ -17,8 +17,9 @@ export function ClientForm() {
   useEffect(() => {
     if (state?.success) {
       formRef.current?.reset();
+      onSuccess?.();
     }
-  }, [state]);
+  }, [state, onSuccess]);
 
   const errors = state?.fieldErrors ?? {};
 

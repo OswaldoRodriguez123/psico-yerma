@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import {
   flexRender,
   getCoreRowModel,
@@ -23,6 +23,7 @@ type DataTableProps<TData> = {
   initialSorting?: SortingState;
   pageSize?: number;
   emptyMessage?: string;
+  toolbarAction?: ReactNode;
 };
 
 const pageSizes = [5, 10, 25, 50];
@@ -36,6 +37,7 @@ export function DataTable<TData>({
   initialSorting,
   pageSize = 10,
   emptyMessage = "No hay resultados.",
+  toolbarAction,
 }: DataTableProps<TData>) {
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -60,14 +62,19 @@ export function DataTable<TData>({
 
   return (
     <div>
-      <input
-        type="search"
-        value={globalFilter}
-        onChange={(event) => setGlobalFilter(event.target.value)}
-        placeholder={searchPlaceholder}
-        aria-label={searchPlaceholder}
-        className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-ink outline-none focus:border-primary"
-      />
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <input
+          type="search"
+          value={globalFilter}
+          onChange={(event) => setGlobalFilter(event.target.value)}
+          placeholder={searchPlaceholder}
+          aria-label={searchPlaceholder}
+          className={`${
+            toolbarAction ? "w-full sm:max-w-xs" : "w-full"
+          } rounded-xl border border-border bg-surface px-4 py-2.5 text-ink outline-none focus:border-primary`}
+        />
+        {toolbarAction ? <div className="shrink-0">{toolbarAction}</div> : null}
+      </div>
 
       <div className="mt-4 overflow-x-auto rounded-2xl border border-border bg-surface">
         <table className="w-full text-left text-sm">
