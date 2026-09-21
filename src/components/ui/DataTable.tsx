@@ -24,7 +24,7 @@ type DataTableProps<TData> = {
   emptyMessage?: string;
 };
 
-const pageSizes = [10, 25, 50];
+const pageSizes = [5, 10, 25, 50];
 const sortIndicator = { asc: " ↑", desc: " ↓" } as const;
 
 export function DataTable<TData>({
