@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { createColumnHelper, type FilterFn } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/DataTable";
 import { DetailDialog, DetailItem } from "@/components/ui/DetailDialog";
+import { ContactStatusSelect } from "@/features/contact/components/ContactStatusSelect";
 import { contactForm } from "@/content/site";
 import type { ContactRow } from "@/features/contact/server/list-contacts";
 import { buttonClass } from "@/components/styles";
@@ -65,6 +66,15 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
         id: "reason",
         header: "Motivo",
       }),
+      columnHelper.accessor("status", {
+        header: "Estado",
+        cell: ({ row }) => (
+          <ContactStatusSelect
+            id={row.original.id}
+            status={row.original.status}
+          />
+        ),
+      }),
       columnHelper.display({
         id: "actions",
         header: "",
@@ -105,6 +115,12 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
                   </DetailItem>
                   <DetailItem label="Motivo">
                     {reasonLabel(contact.reason)}
+                  </DetailItem>
+                  <DetailItem label="Estado">
+                    <ContactStatusSelect
+                      id={contact.id}
+                      status={contact.status}
+                    />
                   </DetailItem>
                   {contact.email ? (
                     <DetailItem label="Correo">{contact.email}</DetailItem>
