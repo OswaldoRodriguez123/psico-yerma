@@ -6,6 +6,7 @@ import {
   type ClientFormState,
 } from "@/features/clients/actions";
 import { ClientFields } from "@/features/clients/components/ClientFields";
+import { useToast } from "@/components/ui/Toast";
 import { buttonClass } from "@/components/styles";
 
 export function ClientForm({ onSuccess }: { onSuccess?: () => void }) {
@@ -14,13 +15,15 @@ export function ClientForm({ onSuccess }: { onSuccess?: () => void }) {
     FormData
   >(createClientAction, undefined);
   const formRef = useRef<HTMLFormElement>(null);
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (state?.success) {
       formRef.current?.reset();
+      showToast("Cliente agregado.");
       onSuccess?.();
     }
-  }, [state, onSuccess]);
+  }, [state, onSuccess, showToast]);
 
   return (
     <form ref={formRef} action={formAction} className="space-y-6">

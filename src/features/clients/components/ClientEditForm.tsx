@@ -6,6 +6,7 @@ import {
   type ClientFormState,
 } from "@/features/clients/actions";
 import { ClientFields } from "@/features/clients/components/ClientFields";
+import { useToast } from "@/components/ui/Toast";
 import { buttonClass } from "@/components/styles";
 import type { ClientRow } from "@/features/clients/server/list-clients";
 
@@ -22,12 +23,14 @@ export function ClientEditForm({
     ClientFormState,
     FormData
   >(updateClientAction, undefined);
+  const { showToast } = useToast();
 
   useEffect(() => {
     if (state?.success) {
+      showToast("Cliente actualizado.");
       onSaved();
     }
-  }, [state, onSaved]);
+  }, [state, onSaved, showToast]);
 
   return (
     <form action={formAction} className="space-y-6">

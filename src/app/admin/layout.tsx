@@ -4,6 +4,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { signOut } from "@/lib/auth";
+import { ToastProvider } from "@/components/ui/Toast";
 
 export const metadata: Metadata = {
   title: "Panel",
@@ -33,7 +34,8 @@ export default async function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-full flex-1 flex-col">
+    <ToastProvider>
+      <div className="flex min-h-full flex-1 flex-col">
       <header className="border-b border-border bg-surface">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-3">
           <nav aria-label="Navegación del panel">
@@ -65,6 +67,7 @@ export default async function AdminLayout({
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-8">
         {children}
       </main>
-    </div>
+      </div>
+    </ToastProvider>
   );
 }

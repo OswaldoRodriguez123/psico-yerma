@@ -58,7 +58,8 @@ export async function updateClientAction(
 }
 
 export async function deleteClientAction(id: string) {
-  await deleteClient(id);
+  const result = await deleteClient(id);
   revalidatePath("/admin/clientes");
   revalidatePath("/admin");
+  return result;
 }

@@ -41,6 +41,27 @@ const contactFilter: FilterFn<ContactRow> = (row, _columnId, filterValue) => {
 
 const columnHelper = createColumnHelper<ContactRow>();
 
+const statusStyles: Record<string, { label: string; className: string }> = {
+  new: { label: "Nuevo", className: "bg-primary-soft text-ink" },
+  contacted: { label: "Contactado", className: "bg-success-soft text-success" },
+  closed: { label: "Cerrado", className: "bg-border text-ink-soft" },
+};
+
+function StatusBadge({ status }: { status: string }) {
+  const style = statusStyles[status] ?? {
+    label: status,
+    className: "bg-border text-ink-soft",
+  };
+
+  return (
+    <span
+      className={`inline-block rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap ${style.className}`}
+    >
+      {style.label}
+    </span>
+  );
+}
+
 export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
   const [statusFilter, setStatusFilter] = useState("new");
 
@@ -76,12 +97,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
       }),
       columnHelper.accessor("status", {
         header: "Estado",
-        cell: ({ row }) => (
-          <ContactStatusSelect
-            id={row.original.id}
-            status={row.original.status}
-          />
-        ),
+        cell: ({ row }) => <StatusBadge status={row.original.status} />,
       }),
       columnHelper.display({
         id: "actions",

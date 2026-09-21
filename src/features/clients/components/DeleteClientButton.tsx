@@ -2,11 +2,13 @@
 
 import { useState, useTransition } from "react";
 import { deleteClientAction } from "@/features/clients/actions";
+import { useToast } from "@/components/ui/Toast";
 import { buttonClass, dangerButtonClass } from "@/components/styles";
 
 export function DeleteClientButton({ id }: { id: string }) {
   const [confirming, setConfirming] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const { showToast } = useToast();
 
   if (!confirming) {
     return (
@@ -26,7 +28,17 @@ export function DeleteClientButton({ id }: { id: string }) {
       <button
         type="button"
         disabled={isPending}
-        onClick={() => startTransition(() => deleteClientAction(id))}
+        onClick={() =>
+          startTransition(async () => {
+            const result = await deleteClientAction(id);
+            showToast(
+              result.ok
+                ? "Cliente eliminado."
+                : "No se pudo eliminar el cliente.",
+              result.ok ? "success" : "error",
+            );
+          })
+        }
         className={dangerButtonClass}
       >
         {isPending ? "Eliminando…" : "Sí, eliminar"}
