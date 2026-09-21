@@ -12,6 +12,7 @@ import {
   type FilterFn,
   type SortingState,
 } from "@tanstack/react-table";
+import { Select } from "@/components/ui/Select";
 
 type DataTableProps<TData> = {
   data: TData[];
@@ -138,19 +139,20 @@ export function DataTable<TData>({
             </span>
             <label className="flex items-center gap-1.5">
               <span className="sr-only">Filas por página</span>
-              <select
+              <Select
+                size="sm"
                 value={table.getState().pagination.pageSize}
                 onChange={(event) =>
                   table.setPageSize(Number(event.target.value))
                 }
-                className="cursor-pointer rounded-lg border border-border bg-surface px-2 py-1"
+                className="cursor-pointer rounded-lg border border-border bg-surface py-1 pl-2 text-ink"
               >
                 {pageSizes.map((size) => (
                   <option key={size} value={size}>
                     {size}
                   </option>
                 ))}
-              </select>
+              </Select>
             </label>
           </div>
 

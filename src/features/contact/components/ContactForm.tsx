@@ -5,7 +5,7 @@ import { contactForm } from "@/content/site";
 import { contactSchema } from "@/features/contact/schema";
 import { TurnstileWidget } from "@/features/contact/components/TurnstileWidget";
 import { buttonClass, fieldClass } from "@/components/styles";
-import { ChevronDownIcon } from "@/components/ui/icons";
+import { Select } from "@/components/ui/Select";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -243,27 +243,25 @@ export function ContactForm({
         <label htmlFor="reason" className="block font-semibold text-ink">
           {contactForm.reasonLabel}
         </label>
-        <div className="relative mt-1">
-          <select
-            id="reason"
-            name="reason"
-            required
-            defaultValue=""
-            aria-invalid={Boolean(errors.reason)}
-            aria-describedby={errors.reason ? "reason-error" : undefined}
-            className={`${fieldClass(Boolean(errors.reason))} appearance-none pr-10`}
-          >
-            <option value="" disabled>
-              {contactForm.reasonPlaceholder}
+        <Select
+          id="reason"
+          name="reason"
+          required
+          defaultValue=""
+          aria-invalid={Boolean(errors.reason)}
+          aria-describedby={errors.reason ? "reason-error" : undefined}
+          wrapperClassName="mt-1"
+          className={fieldClass(Boolean(errors.reason))}
+        >
+          <option value="" disabled>
+            {contactForm.reasonPlaceholder}
+          </option>
+          {contactForm.reasons.map((reason) => (
+            <option key={reason.value} value={reason.value}>
+              {reason.label}
             </option>
-            {contactForm.reasons.map((reason) => (
-              <option key={reason.value} value={reason.value}>
-                {reason.label}
-              </option>
-            ))}
-          </select>
-          <ChevronDownIcon className="pointer-events-none absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 text-ink-soft" />
-        </div>
+          ))}
+        </Select>
         <FieldError id="reason-error" message={errors.reason} />
       </div>
 
