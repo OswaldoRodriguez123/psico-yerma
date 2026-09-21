@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo } from "react";
-import { createColumnHelper } from "@tanstack/react-table";
+import { createColumnHelper, type FilterFn } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/DataTable";
+import { DetailDialog, DetailItem } from "@/components/ui/DetailDialog";
 import { AddClientDialog } from "@/features/clients/components/AddClientDialog";
 import type { ClientRow } from "@/features/clients/server/list-clients";
 
@@ -17,6 +18,20 @@ const birthDateFormatter = new Intl.DateTimeFormat("es-CL", {
 });
 
 const columnHelper = createColumnHelper<ClientRow>();
+
+const clientFilter: FilterFn<ClientRow> = (row, _columnId, filterValue) => {
+  const term = String(filterValue).toLowerCase();
+  const client = row.original;
+
+  return [
+    client.representative_name,
+    client.representative_phone,
+    client.representative_email,
+    client.patient_name,
+    client.patient_birth_date,
+    client.notes,
+  ].some((value) => value?.toLowerCase().includes(term));
+};
 
 export function ClientsTable({ clients }: { clients: ClientRow[] }) {
   const columns = useMemo(
@@ -82,13 +97,57 @@ export function ClientsTable({ clients }: { clients: ClientRow[] }) {
           ),
         },
       ),
-      columnHelper.accessor("notes", {
-        header: "Notas",
-        cell: (info) => (
-          <span className="block max-w-sm whitespace-pre-wrap">
-            {info.getValue()}
-          </span>
-        ),
+      columnHelper.display({
+        id: "actions",
+        header: "",
+        enableSorting: false,
+        cell: ({ row }) => {
+          const client = row.original;
+
+          return (
+            <div className="text-right">
+              <DetailDialog title={client.patient_name}>
+                <dl className="space-y-3 text-sm">
+                  <DetailItem label="Registro">
+                    {dateFormatter.format(new Date(client.created_at))}
+                  </DetailItem>
+                  <DetailItem label="Representante">
+                    <span className="block font-semibold text-ink">
+                      {client.representative_name}
+                    </span>
+                    <span className="block">
+                      {client.representative_phone}
+                    </span>
+                    {client.representative_email ? (
+                      <span className="block">
+                        {client.representative_email}
+                      </span>
+                    ) : null}
+                  </DetailItem>
+                  <DetailItem label="Paciente">
+                    <span className="block font-semibold text-ink">
+                      {client.patient_name}
+                    </span>
+                    {client.patient_birth_date ? (
+                      <span className="block">
+                        {birthDateFormatter.format(
+                          new Date(client.patient_birth_date),
+                        )}
+                      </span>
+                    ) : null}
+                  </DetailItem>
+                  {client.notes ? (
+                    <DetailItem label="Notas">
+                      <span className="whitespace-pre-wrap">
+                        {client.notes}
+                      </span>
+                    </DetailItem>
+                  ) : null}
+                </dl>
+              </DetailDialog>
+            </div>
+          );
+        },
       }),
     ],
     [],
@@ -98,6 +157,7 @@ export function ClientsTable({ clients }: { clients: ClientRow[] }) {
     <DataTable
       data={clients}
       columns={columns}
+      globalFilterFn={clientFilter}
       initialSorting={[{ id: "created_at", desc: true }]}
       searchPlaceholder="Buscar por representante, paciente o notas…"
       emptyMessage="Aún no hay clientes registrados."
