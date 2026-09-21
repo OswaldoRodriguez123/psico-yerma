@@ -3,11 +3,13 @@ import { faq } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { ChevronDownIcon } from "@/components/ui/icons";
 import { cardBodyClass, cardClass, cardTitleClass } from "@/components/styles";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Preguntas frecuentes",
+export const metadata: Metadata = pageMetadata({
+  title: faq.title,
   description: faq.intro,
-};
+  path: "/faq",
+});
 
 export default function FaqPage() {
   return (

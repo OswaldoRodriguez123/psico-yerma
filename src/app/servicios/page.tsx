@@ -3,11 +3,13 @@ import Link from "next/link";
 import { services } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { buttonClass, cardBodyClass, cardClass, cardTitleClass } from "@/components/styles";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Servicios",
+export const metadata: Metadata = pageMetadata({
+  title: services.title,
   description: services.intro,
-};
+  path: "/servicios",
+});
 
 export default function ServicesPage() {
   return (

@@ -27,6 +27,7 @@ export const site = {
   tagline: "Psicología infantil",
   description:
     "Acompañamiento psicológico para niñas, niños y sus familias.",
+  url: "https://psico-yerma.vercel.app",
   instagram: "https://www.instagram.com/psico.yerma/",
   contact: {
     whatsapp: "+56 9 4109 2678",

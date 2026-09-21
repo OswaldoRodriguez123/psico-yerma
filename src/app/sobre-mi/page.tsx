@@ -3,11 +3,13 @@ import Image from "next/image";
 import { about, site } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
 import { cardBodyClass, cardClass, cardTitleClass } from "@/components/styles";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Sobre mí",
+export const metadata: Metadata = pageMetadata({
+  title: about.title,
   description: about.description,
-};
+  path: "/sobre-mi",
+});
 
 export default function AboutPage() {
   return (

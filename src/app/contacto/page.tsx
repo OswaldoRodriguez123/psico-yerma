@@ -10,11 +10,13 @@ import {
   cardClass,
   cardTitleClass,
 } from "@/components/styles";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contacto",
+export const metadata: Metadata = pageMetadata({
+  title: contact.title,
   description: contact.intro,
-};
+  path: "/contacto",
+});
 
 export default function ContactPage() {
   const { whatsapp, email, location } = site.contact;
