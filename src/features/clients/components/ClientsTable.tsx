@@ -6,6 +6,7 @@ import { DataTable } from "@/components/ui/DataTable";
 import { DetailDialog, DetailItem } from "@/components/ui/DetailDialog";
 import { AddClientDialog } from "@/features/clients/components/AddClientDialog";
 import { ClientEditForm } from "@/features/clients/components/ClientEditForm";
+import { DeleteClientButton } from "@/features/clients/components/DeleteClientButton";
 import type { ClientRow } from "@/features/clients/server/list-clients";
 
 const dateFormatter = new Intl.DateTimeFormat("es-CL", {
@@ -109,6 +110,7 @@ export function ClientsTable({ clients }: { clients: ClientRow[] }) {
             <div className="text-right">
               <DetailDialog
                 title={client.patient_name}
+                actions={<DeleteClientButton id={client.id} />}
                 editContent={({ onSaved, onCancel }) => (
                   <ClientEditForm
                     client={client}

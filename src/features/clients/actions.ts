@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClientRecord } from "@/features/clients/server/create-client";
 import { updateClient } from "@/features/clients/server/update-client";
+import { deleteClient } from "@/features/clients/server/delete-client";
 
 export type ClientFormState =
   | { fieldErrors?: Record<string, string>; error?: string; success?: boolean }
@@ -54,4 +55,10 @@ export async function updateClientAction(
 
   revalidatePath("/admin/clientes");
   return { success: true };
+}
+
+export async function deleteClientAction(id: string) {
+  await deleteClient(id);
+  revalidatePath("/admin/clientes");
+  revalidatePath("/admin");
 }

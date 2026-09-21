@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { createColumnHelper, type FilterFn } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/DataTable";
+import { Select } from "@/components/ui/Select";
 import { DetailDialog, DetailItem } from "@/components/ui/DetailDialog";
 import { ContactStatusSelect } from "@/features/contact/components/ContactStatusSelect";
 import { contactForm } from "@/content/site";
@@ -41,6 +42,20 @@ const contactFilter: FilterFn<ContactRow> = (row, _columnId, filterValue) => {
 const columnHelper = createColumnHelper<ContactRow>();
 
 export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
+  const [statusFilter, setStatusFilter] = useState("not-new");
+
+  const filteredContacts = useMemo(() => {
+    if (statusFilter === "all") {
+      return contacts;
+    }
+
+    if (statusFilter === "not-new") {
+      return contacts.filter((contact) => contact.status !== "new");
+    }
+
+    return contacts.filter((contact) => contact.status === statusFilter);
+  }, [contacts, statusFilter]);
+
   const columns = useMemo(
     () => [
       columnHelper.accessor("created_at", {
@@ -145,12 +160,27 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
 
   return (
     <DataTable
-      data={contacts}
+      data={filteredContacts}
       columns={columns}
       globalFilterFn={contactFilter}
       initialSorting={[{ id: "created_at", desc: true }]}
       searchPlaceholder="Buscar por nombre, contacto o mensaje…"
-      emptyMessage="No se encontraron contactos."
+      emptyMessage="No hay contactos con este filtro."
+      toolbarAction={
+        <Select
+          size="sm"
+          value={statusFilter}
+          onChange={(event) => setStatusFilter(event.target.value)}
+          aria-label="Filtrar por estado"
+          className="cursor-pointer rounded-lg border border-border bg-surface py-2 pl-3 text-ink"
+        >
+          <option value="not-new">No nuevos</option>
+          <option value="new">Nuevos</option>
+          <option value="contacted">Contactados</option>
+          <option value="closed">Cerrados</option>
+          <option value="all">Todos</option>
+        </Select>
+      }
     />
   );
 }
