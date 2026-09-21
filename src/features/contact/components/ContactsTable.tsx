@@ -6,7 +6,7 @@ import { DataTable } from "@/components/ui/DataTable";
 import { contactForm } from "@/content/site";
 import type { ContactRow } from "@/features/contact/server/list-contacts";
 import { buttonClass } from "@/components/styles";
-import { CloseIcon } from "@/components/ui/icons";
+import { CloseIcon, EyeIcon } from "@/components/ui/icons";
 
 const dateFormatter = new Intl.DateTimeFormat("es-CL", {
   dateStyle: "medium",
@@ -87,8 +87,9 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
             <button
               type="button"
               onClick={() => openDetail(row.original)}
-              className="cursor-pointer font-semibold text-ink-soft transition-colors hover:text-ink"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-ink-soft transition-colors hover:border-primary hover:text-ink"
             >
+              <EyeIcon className="h-4 w-4" />
               Ver
             </button>
           </div>
@@ -112,7 +113,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
       <dialog
         ref={dialogRef}
         onClose={() => setSelected(null)}
-        className="w-full max-w-lg rounded-2xl border border-border bg-surface p-6 text-ink"
+        className="m-auto max-h-[85vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-border bg-surface p-6 text-ink"
       >
         {selected ? (
           <div>
