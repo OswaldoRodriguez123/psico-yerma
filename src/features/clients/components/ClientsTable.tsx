@@ -169,6 +169,7 @@ export function ClientsTable({ clients }: { clients: ClientRow[] }) {
     <DataTable
       data={clients}
       columns={columns}
+      getRowId={(row) => row.id}
       globalFilterFn={clientFilter}
       initialSorting={[{ id: "created_at", desc: true }]}
       searchPlaceholder="Buscar por representante, paciente o notas…"

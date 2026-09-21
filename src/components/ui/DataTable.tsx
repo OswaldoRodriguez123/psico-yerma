@@ -24,6 +24,7 @@ type DataTableProps<TData> = {
   pageSize?: number;
   emptyMessage?: string;
   toolbarAction?: ReactNode;
+  getRowId?: (row: TData) => string;
 };
 
 const pageSizes = [5, 10, 25, 50];
@@ -38,6 +39,7 @@ export function DataTable<TData>({
   pageSize = 10,
   emptyMessage = "No hay resultados.",
   toolbarAction,
+  getRowId,
 }: DataTableProps<TData>) {
   const [globalFilter, setGlobalFilter] = useState("");
 
@@ -45,6 +47,7 @@ export function DataTable<TData>({
   const table = useReactTable({
     data,
     columns,
+    getRowId,
     state: { globalFilter },
     onGlobalFilterChange: setGlobalFilter,
     globalFilterFn,

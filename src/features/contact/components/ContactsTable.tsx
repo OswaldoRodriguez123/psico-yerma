@@ -66,7 +66,10 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
   const [statusFilter, setStatusFilter] = useState("new");
 
   const filteredContacts = useMemo(
-    () => contacts.filter((contact) => contact.status === statusFilter),
+    () =>
+      statusFilter === "all"
+        ? contacts
+        : contacts.filter((contact) => contact.status === statusFilter),
     [contacts, statusFilter],
   );
 
@@ -171,6 +174,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
     <DataTable
       data={filteredContacts}
       columns={columns}
+      getRowId={(row) => row.id}
       globalFilterFn={contactFilter}
       initialSorting={[{ id: "created_at", desc: true }]}
       searchPlaceholder="Buscar por nombre, contacto o mensaje…"
@@ -186,6 +190,7 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
           <option value="new">Nuevos</option>
           <option value="contacted">Contactados</option>
           <option value="closed">Cerrados</option>
+          <option value="all">Todos</option>
         </Select>
       }
     />
