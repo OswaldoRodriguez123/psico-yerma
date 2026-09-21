@@ -39,7 +39,7 @@ export function DetailDialog({
       <dialog
         ref={dialogRef}
         onClose={() => setEditing(false)}
-        className="m-auto max-h-[85vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-border bg-surface p-6 text-ink"
+        className="m-auto max-h-[85vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-border bg-surface p-6 text-left text-ink"
       >
         <div className="flex items-start justify-between gap-4">
           <h2 className="text-lg font-bold text-ink">{title}</h2>
