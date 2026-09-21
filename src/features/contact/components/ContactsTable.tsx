@@ -1,15 +1,8 @@
 "use client";
 
 import { useCallback, useMemo, useRef, useState } from "react";
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
+import { createColumnHelper, type FilterFn } from "@tanstack/react-table";
+import { DataTable } from "@/components/ui/DataTable";
 import { contactForm } from "@/content/site";
 import type { ContactRow } from "@/features/contact/server/list-contacts";
 import { buttonClass } from "@/components/styles";
@@ -31,11 +24,23 @@ function reasonLabel(reason: string) {
   );
 }
 
+const contactFilter: FilterFn<ContactRow> = (row, _columnId, filterValue) => {
+  const term = String(filterValue).toLowerCase();
+  const contact = row.original;
+
+  return [
+    contact.name,
+    contact.email,
+    contact.phone,
+    contact.message,
+    reasonLabel(contact.reason),
+  ].some((value) => value?.toLowerCase().includes(term));
+};
+
 const columnHelper = createColumnHelper<ContactRow>();
 
 export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
   const [selected, setSelected] = useState<ContactRow | null>(null);
-  const [globalFilter, setGlobalFilter] = useState("");
   const dialogRef = useRef<HTMLDialogElement>(null);
 
   const openDetail = useCallback((contact: ContactRow) => {
@@ -93,134 +98,16 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
     [openDetail],
   );
 
-  // eslint-disable-next-line react-hooks/incompatible-library -- TanStack Table no es compatible con React Compiler
-  const table = useReactTable({
-    data: contacts,
-    columns,
-    state: { globalFilter },
-    onGlobalFilterChange: setGlobalFilter,
-    globalFilterFn: (row, _columnId, filterValue) => {
-      const term = String(filterValue).toLowerCase();
-      const contact = row.original;
-
-      return [
-        contact.name,
-        contact.email,
-        contact.phone,
-        contact.message,
-        reasonLabel(contact.reason),
-      ].some((value) => value?.toLowerCase().includes(term));
-    },
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      sorting: [{ id: "created_at", desc: true }],
-      pagination: { pageSize: 10 },
-    },
-  });
-
-  const rows = table.getRowModel().rows;
-  const sortIndicator = { asc: " ↑", desc: " ↓" } as const;
-
   return (
-    <div>
-      <input
-        type="search"
-        value={globalFilter}
-        onChange={(event) => setGlobalFilter(event.target.value)}
-        placeholder="Buscar por nombre, contacto o mensaje…"
-        aria-label="Buscar contactos"
-        className="w-full rounded-xl border border-border bg-surface px-4 py-2.5 text-ink outline-none focus:border-primary"
+    <>
+      <DataTable
+        data={contacts}
+        columns={columns}
+        globalFilterFn={contactFilter}
+        initialSorting={[{ id: "created_at", desc: true }]}
+        searchPlaceholder="Buscar por nombre, contacto o mensaje…"
+        emptyMessage="No se encontraron contactos."
       />
-
-      <div className="mt-4 overflow-x-auto rounded-2xl border border-border bg-surface">
-        <table className="w-full text-left text-sm">
-          <thead className="bg-primary-soft text-ink">
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => (
-                  <th
-                    key={header.id}
-                    className="px-4 py-3 font-semibold whitespace-nowrap"
-                  >
-                    {header.isPlaceholder ? null : header.column.getCanSort() ? (
-                      <button
-                        type="button"
-                        onClick={header.column.getToggleSortingHandler()}
-                        className="cursor-pointer select-none"
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext(),
-                        )}
-                        {sortIndicator[
-                          header.column.getIsSorted() as keyof typeof sortIndicator
-                        ] ?? ""}
-                      </button>
-                    ) : (
-                      flexRender(
-                        header.column.columnDef.header,
-                        header.getContext(),
-                      )
-                    )}
-                  </th>
-                ))}
-              </tr>
-            ))}
-          </thead>
-          <tbody>
-            {rows.length === 0 ? (
-              <tr className="border-t border-border">
-                <td
-                  colSpan={columns.length}
-                  className="px-4 py-6 text-center text-ink-soft"
-                >
-                  No se encontraron contactos.
-                </td>
-              </tr>
-            ) : (
-              rows.map((row) => (
-                <tr key={row.id} className="border-t border-border">
-                  {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className="px-4 py-3 text-ink-soft">
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {table.getPageCount() > 1 ? (
-        <div className="mt-4 flex items-center justify-between gap-3 text-sm text-ink-soft">
-          <span>
-            Página {table.getState().pagination.pageIndex + 1} de{" "}
-            {table.getPageCount()}
-          </span>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-              className="cursor-pointer rounded-full border border-border px-4 py-1.5 font-semibold transition-colors hover:border-primary disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Anterior
-            </button>
-            <button
-              type="button"
-              onClick={() => table.nextPage()}
-              disabled={!table.getCanNextPage()}
-              className="cursor-pointer rounded-full border border-border px-4 py-1.5 font-semibold transition-colors hover:border-primary disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              Siguiente
-            </button>
-          </div>
-        </div>
-      ) : null}
 
       <dialog
         ref={dialogRef}
@@ -288,6 +175,6 @@ export function ContactsTable({ contacts }: { contacts: ContactRow[] }) {
           </div>
         ) : null}
       </dialog>
-    </div>
+    </>
   );
 }
