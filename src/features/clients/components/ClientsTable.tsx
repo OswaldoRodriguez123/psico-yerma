@@ -5,6 +5,7 @@ import { createColumnHelper, type FilterFn } from "@tanstack/react-table";
 import { DataTable } from "@/components/ui/DataTable";
 import { DetailDialog, DetailItem } from "@/components/ui/DetailDialog";
 import { AddClientDialog } from "@/features/clients/components/AddClientDialog";
+import { ClientEditForm } from "@/features/clients/components/ClientEditForm";
 import type { ClientRow } from "@/features/clients/server/list-clients";
 
 const dateFormatter = new Intl.DateTimeFormat("es-CL", {
@@ -106,7 +107,16 @@ export function ClientsTable({ clients }: { clients: ClientRow[] }) {
 
           return (
             <div className="text-right">
-              <DetailDialog title={client.patient_name}>
+              <DetailDialog
+                title={client.patient_name}
+                editContent={({ onSaved, onCancel }) => (
+                  <ClientEditForm
+                    client={client}
+                    onSaved={onSaved}
+                    onCancel={onCancel}
+                  />
+                )}
+              >
                 <dl className="space-y-3 text-sm">
                   <DetailItem label="Registro">
                     {dateFormatter.format(new Date(client.created_at))}

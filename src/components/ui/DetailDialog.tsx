@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, type ReactNode } from "react";
+import { useCallback, useRef, useState, type ReactNode } from "react";
+import { buttonClass } from "@/components/styles";
 import { CloseIcon, EyeIcon } from "@/components/ui/icons";
 
 export function DetailDialog({
@@ -8,13 +9,21 @@ export function DetailDialog({
   children,
   actions,
   triggerLabel = "Ver",
+  editContent,
 }: {
   title: string;
   children: ReactNode;
   actions?: ReactNode;
   triggerLabel?: string;
+  editContent?: (controls: {
+    onSaved: () => void;
+    onCancel: () => void;
+  }) => ReactNode;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const [editing, setEditing] = useState(false);
+
+  const exitEdit = useCallback(() => setEditing(false), []);
 
   return (
     <>
@@ -29,6 +38,7 @@ export function DetailDialog({
 
       <dialog
         ref={dialogRef}
+        onClose={() => setEditing(false)}
         className="m-auto max-h-[85vh] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-border bg-surface p-6 text-ink"
       >
         <div className="flex items-start justify-between gap-4">
@@ -43,9 +53,26 @@ export function DetailDialog({
           </button>
         </div>
 
-        <div className="mt-4">{children}</div>
+        <div className="mt-4">
+          {editing && editContent
+            ? editContent({ onSaved: exitEdit, onCancel: exitEdit })
+            : children}
+        </div>
 
-        {actions ? <div className="mt-5 flex flex-wrap gap-3">{actions}</div> : null}
+        {!editing ? (
+          <div className="mt-5 flex flex-wrap gap-3">
+            {actions}
+            {editContent ? (
+              <button
+                type="button"
+                onClick={() => setEditing(true)}
+                className={buttonClass}
+              >
+                Editar
+              </button>
+            ) : null}
+          </div>
+        ) : null}
       </dialog>
     </>
   );
