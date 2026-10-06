@@ -86,6 +86,19 @@ export function MenuIcon({ className }: IconProps) {
   );
 }
 
+export function HeartIcon({ className }: IconProps) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+    >
+      <path d="M12 21s-7.5-4.6-10-9.2C.5 8.4 2.3 4.6 5.8 4.1c2-.3 3.9.7 5 2.3 1.1-1.6 3-2.6 5-2.3 3.5.5 5.3 4.3 3.8 7.7C19.5 16.4 12 21 12 21Z" />
+    </svg>
+  );
+}
+
 export function EyeIcon({ className }: IconProps) {
   return (
     <svg
