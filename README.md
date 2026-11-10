@@ -64,10 +64,13 @@ CONTACT_FROM_EMAIL=onboarding@resend.dev
 CONTACT_TO_EMAIL=
 TURNSTILE_SITE_KEY=
 TURNSTILE_SECRET_KEY=
+CRON_SECRET=
 ```
 
 - `SUPABASE_SERVICE_ROLE_KEY` is secret and only used on the server (never with
   a `NEXT_PUBLIC_` prefix).
+- `CRON_SECRET` is optional: when set, `/api/keepalive` requires
+  `Authorization: Bearer <value>`.
 - Database: run `supabase/migrations/0001_create_contacts.sql` and
   `0002_create_clients.sql` in the Supabase SQL Editor.
 
