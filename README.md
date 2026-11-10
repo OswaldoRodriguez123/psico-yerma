@@ -1,6 +1,6 @@
 # psico.yerma
 
-[![CI](https://github.com/OswaldoRodriguez123/psico-yerma/actions/workflows/ci.yml/badge.svg)](https://github.com/OswaldoRodriguez123/psico-yerma/actions/workflows/ci.yml)
+[![CI](https://github.com/OswaldoRodriguez123/psico-yerma/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/OswaldoRodriguez123/psico-yerma/actions/workflows/ci.yml)
 
 Website for a child and teen psychology practice, with a private admin panel to
 manage inquiries and clients.
