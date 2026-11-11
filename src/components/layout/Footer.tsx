@@ -8,6 +8,7 @@ type FooterLink = {
   href: string;
   label: string;
   ariaLabel?: string;
+  title?: string;
   Icon: ComponentType<{ className?: string }>;
   external: boolean;
 };
@@ -51,7 +52,8 @@ export function Footer() {
       key: "review",
       href: site.googleReviewUrl,
       label: "Reseña",
-      ariaLabel: contact.reviewNote,
+      ariaLabel: contact.reviewCta,
+      title: `${contact.reviewCta}. ${contact.reviewNote}`,
       Icon: StarIcon,
       external: true,
     });
@@ -65,12 +67,12 @@ export function Footer() {
         </p>
 
         <ul className="flex w-full items-stretch justify-around sm:w-auto sm:items-center sm:justify-end sm:gap-3">
-          {links.map(({ key, href, label, ariaLabel, Icon, external }) => (
+          {links.map(({ key, href, label, ariaLabel, title, Icon, external }) => (
             <li key={key} className="flex-1 sm:flex-none">
               <a
                 href={href}
                 aria-label={ariaLabel ?? label}
-                title={ariaLabel}
+                title={title ?? ariaLabel ?? label}
                 {...(external
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
