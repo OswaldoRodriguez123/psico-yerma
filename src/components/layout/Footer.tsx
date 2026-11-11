@@ -76,10 +76,16 @@ export function Footer() {
                 {...(external
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
-                className="flex h-full flex-col items-center justify-center gap-0.5 text-xs font-semibold text-ink-soft transition-colors hover:text-ink sm:h-10 sm:w-10 sm:gap-0 sm:rounded-full sm:bg-surface sm:text-ink sm:hover:bg-primary"
+                className="group relative flex h-full flex-col items-center justify-center gap-0.5 text-xs font-semibold text-ink-soft transition-colors hover:text-ink sm:h-10 sm:w-10 sm:gap-0 sm:rounded-full sm:bg-surface sm:text-ink sm:hover:bg-primary"
               >
                 <Icon className="h-5 w-5" />
                 <span className="sm:hidden">{label}</span>
+                <span
+                  role="tooltip"
+                  className="pointer-events-none absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 whitespace-nowrap rounded-md bg-ink px-2 py-1 text-xs font-medium text-surface opacity-0 shadow-md transition-opacity duration-150 group-hover:opacity-100 group-focus-visible:opacity-100"
+                >
+                  {ariaLabel ?? label}
+                </span>
               </a>
             </li>
           ))}
