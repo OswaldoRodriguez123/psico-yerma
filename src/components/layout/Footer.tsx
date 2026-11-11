@@ -1,12 +1,13 @@
 import type { ComponentType } from "react";
-import { site } from "@/content/site";
+import { contact, site } from "@/content/site";
 import { getMailtoHref, getWhatsappHref } from "@/features/contact/links";
-import { InstagramIcon, MailIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { InstagramIcon, MailIcon, StarIcon, WhatsAppIcon } from "@/components/ui/icons";
 
 type FooterLink = {
   key: string;
   href: string;
   label: string;
+  ariaLabel?: string;
   Icon: ComponentType<{ className?: string }>;
   external: boolean;
 };
@@ -45,6 +46,17 @@ export function Footer() {
     });
   }
 
+  if (site.googleReviewUrl) {
+    links.push({
+      key: "review",
+      href: site.googleReviewUrl,
+      label: "Reseña",
+      ariaLabel: contact.reviewNote,
+      Icon: StarIcon,
+      external: true,
+    });
+  }
+
   return (
     <footer className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-primary-soft">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-4 px-6">
@@ -53,11 +65,12 @@ export function Footer() {
         </p>
 
         <ul className="flex w-full items-stretch justify-around sm:w-auto sm:items-center sm:justify-end sm:gap-3">
-          {links.map(({ key, href, label, Icon, external }) => (
+          {links.map(({ key, href, label, ariaLabel, Icon, external }) => (
             <li key={key} className="flex-1 sm:flex-none">
               <a
                 href={href}
-                aria-label={label}
+                aria-label={ariaLabel ?? label}
+                title={ariaLabel}
                 {...(external
                   ? { target: "_blank", rel: "noopener noreferrer" }
                   : {})}
