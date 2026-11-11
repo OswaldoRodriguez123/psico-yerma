@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { contact, contactForm, site } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
-import { ContactDetails } from "@/components/ui/ContactDetails";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbJsonLd, contactPageJsonLd, medicalBusinessJsonLd } from "@/lib/structured-data";
 import { ContactForm } from "@/features/contact/components/ContactForm";
@@ -69,8 +68,6 @@ export default function ContactPage() {
             </span>
           </a>
         ) : null}
-
-        <ContactDetails />
 
         <p className="pt-4 text-sm text-ink-soft">{contact.privacyNote}</p>
 
