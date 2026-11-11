@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { services } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, servicesJsonLd } from "@/lib/structured-data";
 import { buttonClass, cardBodyClass, cardClass, cardTitleClass } from "@/components/styles";
 import { pageMetadata } from "@/lib/seo";
 
@@ -14,6 +16,7 @@ export const metadata: Metadata = pageMetadata({
 export default function ServicesPage() {
   return (
     <>
+      <JsonLd data={[servicesJsonLd(), breadcrumbJsonLd("/servicios", services.title)]} />
       <PageIntro title={services.title} intro={services.intro} />
 
       <section className="mx-auto max-w-5xl px-6 pb-12">

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { home, site } from "@/content/site";
 import { Logo } from "@/components/layout/Logo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { personJsonLd, websiteJsonLd } from "@/lib/structured-data";
 import { buttonClass, cardBodyClass, cardClass, cardTitleClass } from "@/components/styles";
 
 export const metadata: Metadata = {
@@ -11,6 +13,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
+      <JsonLd data={[websiteJsonLd(), personJsonLd()]} />
       <section className="mx-auto flex max-w-3xl flex-col items-center px-6 pt-16 pb-12 text-center">
         <Logo className="h-28 w-auto" />
         <p className="mt-6 text-sm font-semibold tracking-widest text-ink-soft uppercase">

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { contact, contactForm, site } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, contactPageJsonLd } from "@/lib/structured-data";
 import { ContactForm } from "@/features/contact/components/ContactForm";
 import { MailIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { getMailtoHref, getWhatsappHref } from "@/features/contact/links";
@@ -26,6 +28,7 @@ export default function ContactPage() {
 
   return (
     <>
+      <JsonLd data={[contactPageJsonLd(), breadcrumbJsonLd("/contacto", contact.title)]} />
       <PageIntro title={contact.title} intro={contact.intro} />
 
       <section className="mx-auto max-w-3xl space-y-4 px-6 pb-12">

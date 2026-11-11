@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { faq } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, faqJsonLd } from "@/lib/structured-data";
 import { ChevronDownIcon } from "@/components/ui/icons";
 import { cardBodyClass, cardClass, cardTitleClass } from "@/components/styles";
 import { pageMetadata } from "@/lib/seo";
@@ -14,6 +16,7 @@ export const metadata: Metadata = pageMetadata({
 export default function FaqPage() {
   return (
     <>
+      <JsonLd data={[faqJsonLd(), breadcrumbJsonLd("/faq", faq.title)]} />
       <PageIntro title={faq.title} intro={faq.intro} />
 
       <section className="mx-auto max-w-3xl space-y-3 px-6 pb-12">

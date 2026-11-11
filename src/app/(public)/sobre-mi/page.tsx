@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { about, site } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd, personJsonLd } from "@/lib/structured-data";
 import { cardBodyClass, cardClass, cardTitleClass } from "@/components/styles";
 import { pageMetadata } from "@/lib/seo";
 
@@ -14,6 +16,7 @@ export const metadata: Metadata = pageMetadata({
 export default function AboutPage() {
   return (
     <>
+      <JsonLd data={[personJsonLd(), breadcrumbJsonLd("/sobre-mi", about.title)]} />
       <PageIntro title={about.title} intro={about.intro} />
 
       <section className="mx-auto grid max-w-4xl gap-8 px-6 pb-10 sm:grid-cols-[240px_1fr]">
@@ -21,10 +24,11 @@ export default function AboutPage() {
           <Image
             src="/images/retrato.jpg"
             alt={site.professionalName}
-            fill
+            width={240}
+            height={320}
             priority
             sizes="(min-width: 640px) 240px, 208px"
-            className="object-cover"
+            className="h-full w-full object-cover"
           />
         </div>
 
