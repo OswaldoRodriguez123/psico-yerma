@@ -111,6 +111,7 @@ export function medicalBusinessJsonLd() {
     "@context": CONTEXT,
     "@type": "MedicalBusiness",
     name: site.name,
+    alternateName: site.googleBusinessName,
     url: site.url,
     telephone: whatsapp,
     email,

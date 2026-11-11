@@ -36,6 +36,10 @@ export const site = {
   // Ficha de Google Business Profile (enlace canónico por CID). Es la misma
   // entidad que el sitio: va como sameAs en el JSON-LD.
   googleMapsUrl: "https://maps.google.com/?cid=14465603749844622233",
+  // Nombre exacto de la ficha de Google Business Profile. Va como
+  // `alternateName` en el JSON-LD para que Google reconozca el sitio y la
+  // ficha como la misma entidad.
+  googleBusinessName: "Ps. Yermain González",
   // Enlace para pedir reseñas: el que entrega el panel en "Pedir opiniones".
   // Abre el diálogo de reseña de la ficha directamente.
   googleReviewUrl: "https://g.page/r/CZkbDOv3JcDIEBM/review",

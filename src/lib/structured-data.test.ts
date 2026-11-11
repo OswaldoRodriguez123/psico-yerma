@@ -128,6 +128,10 @@ describe("structured data", () => {
     ]);
   });
 
+  it("declara el nombre de la ficha de Google como nombre alternativo", () => {
+    expect(medicalBusinessJsonLd().alternateName).toBe("Ps. Yermain González");
+  });
+
   it("no mezcla el espacio arrendado como si fuera el negocio", () => {
     const business = medicalBusinessJsonLd();
 
