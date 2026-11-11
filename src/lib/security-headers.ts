@@ -14,7 +14,7 @@ export const securityHeaders: ReadonlyArray<{ key: string; value: string }> = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob:",
       "font-src 'self'",
-      "connect-src 'self' https://challenges.cloudflare.com",
+      "connect-src 'self'",
       "frame-src https://challenges.cloudflare.com",
       "object-src 'none'",
       "base-uri 'self'",
