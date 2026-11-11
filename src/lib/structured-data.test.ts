@@ -95,7 +95,7 @@ describe("structured data", () => {
     expect(business.telephone).toBe(site.contact.whatsapp);
     expect(business.address).toEqual({
       "@type": "PostalAddress",
-      streetAddress: "Av. Pedro de Valdivia 1860",
+      streetAddress: "Av. Nueva Providencia 1860",
       addressLocality: "Providencia",
       addressRegion: "Región Metropolitana",
       postalCode: "7511283",

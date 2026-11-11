@@ -46,7 +46,7 @@ export const site = {
       // Box arrendado en Espacio Descubrirte. Se publica la dirección, pero el
       // espacio no se declara como parte del negocio en el schema.
       placeName: "Espacio Descubrirte",
-      street: "Av. Pedro de Valdivia 1860",
+      street: "Av. Nueva Providencia 1860",
       commune: "Providencia",
       city: "Santiago",
       region: "Región Metropolitana",
@@ -54,7 +54,7 @@ export const site = {
       country: "CL",
       reference: "A pasos de Metro Pedro de Valdivia",
       // Aproximadas al edificio (geocodificación de la numeración).
-      geo: { latitude: -33.4398571, longitude: -70.6069167 },
+      geo: { latitude: -33.425491, longitude: -70.6141066 },
     },
     hours: {
       inPerson: [

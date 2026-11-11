@@ -6,7 +6,7 @@ const html = renderToStaticMarkup(<ContactDetails />);
 
 describe("ContactDetails", () => {
   it("publica la dirección y la referencia de metro", () => {
-    expect(html).toContain("Av. Pedro de Valdivia 1860");
+    expect(html).toContain("Av. Nueva Providencia 1860");
     expect(html).toContain("Providencia");
     expect(html).toContain("Metro Pedro de Valdivia");
   });
