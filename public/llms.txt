@@ -1,0 +1,22 @@
+# psico.yerma
+
+> Psicología infantil y adolescente. Acompañamiento psicológico para niñas,
+> niños y sus familias, con terapia cognitivo-conductual y el juego como
+> herramienta de evaluación e intervención.
+
+Sitio de Yermain A. González C. (Yerma), psicóloga infantil y adolescente.
+Formación en desarrollo infantil, WISC V, TEA y TDAH.
+
+## Páginas
+
+- [Inicio](https://psico-yerma.vercel.app/): presentación del espacio de acompañamiento.
+- [Sobre mí](https://psico-yerma.vercel.app/sobre-mi): formación y enfoque de trabajo.
+- [Servicios](https://psico-yerma.vercel.app/servicios): evaluación psicológica infantil, acompañamiento psicoterapéutico, orientación a familias y talleres.
+- [Preguntas frecuentes](https://psico-yerma.vercel.app/faq): edad de atención, primera sesión, duración, participación de las familias y cómo agendar.
+- [Contacto](https://psico-yerma.vercel.app/contacto): formulario, WhatsApp y correo.
+
+## Contacto
+
+- Correo: yermain.gonzalez7@gmail.com
+- WhatsApp: +56 9 4109 2678
+- Instagram: https://www.instagram.com/psico.yerma/

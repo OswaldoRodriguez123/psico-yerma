@@ -28,6 +28,10 @@ export const site = {
   description:
     "Acompañamiento psicológico para niñas, niños y sus familias.",
   url: "https://psico-yerma.vercel.app",
+  // Fecha de la última edición de este archivo. Alimenta el <lastmod> del
+  // sitemap: es una fecha editable a mano, no la del build (que mentiría en
+  // cada despliegue).
+  contentUpdatedAt: "2026-11-11",
   instagram: "https://www.instagram.com/psico.yerma/",
   contact: {
     whatsapp: "+56 9 4109 2678",
@@ -71,7 +75,7 @@ export const home = {
 export const about = {
   title: "Sobre mí",
   description:
-    "Psicóloga infantil y adolescente. Formación en desarrollo infantil, WISC V, TEA y TDAH. Terapia cognitivo-conductual con el juego como herramienta de evaluación e intervención.",
+    "Psicóloga infantil y adolescente. Formación en desarrollo infantil, WISC V, TEA y TDAH. Terapia cognitivo-conductual con el juego como herramienta.",
   intro: "¡Hola! Soy Yermain A. González C. y me dicen Yerma.",
   paragraphs: [
     "Mi sentir por la psicología me ha llevado a formarme y enfocarme en el apoyo a niños, niñas y adolescentes.",
