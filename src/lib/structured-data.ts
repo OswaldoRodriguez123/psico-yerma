@@ -27,7 +27,7 @@ export function personJsonLd() {
     description: about.description,
     url: site.url,
     email: site.contact.email,
-    sameAs: [site.instagram],
+    sameAs: [site.instagram, site.googleMapsUrl],
     knowsAbout: [...about.additionalFormation],
   };
 }
@@ -135,6 +135,6 @@ export function medicalBusinessJsonLd() {
       closes: slot.closes,
     })),
     priceRange: formatClp(services.consultation.price),
-    sameAs: [site.instagram],
+    sameAs: [site.instagram, site.googleMapsUrl],
   };
 }

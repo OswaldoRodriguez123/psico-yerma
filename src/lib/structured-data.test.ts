@@ -29,7 +29,7 @@ describe("structured data", () => {
       name: site.professionalName,
       url: site.url,
     });
-    expect(person.sameAs).toEqual([site.instagram]);
+    expect(person.sameAs).toEqual([site.instagram, site.googleMapsUrl]);
     expect(person).not.toHaveProperty("address");
     expect(person).not.toHaveProperty("telephone");
   });
@@ -98,7 +98,7 @@ describe("structured data", () => {
       streetAddress: "Av. Pedro de Valdivia 1860",
       addressLocality: "Providencia",
       addressRegion: "Región Metropolitana",
-      postalCode: "7500000",
+      postalCode: "7511283",
       addressCountry: "CL",
     });
     expect(business.openingHoursSpecification).toEqual([
@@ -121,7 +121,15 @@ describe("structured data", () => {
     expect(medicalBusinessJsonLd().priceRange).toBe("$40.000");
   });
 
-  it("no mezcla el espacio arrendado como si fuera el negocio", () => {    const business = medicalBusinessJsonLd();
+  it("enlaza la ficha de Google como mismo negocio", () => {
+    expect(medicalBusinessJsonLd().sameAs).toEqual([
+      site.instagram,
+      site.googleMapsUrl,
+    ]);
+  });
+
+  it("no mezcla el espacio arrendado como si fuera el negocio", () => {
+    const business = medicalBusinessJsonLd();
 
     expect(business.name).toBe(site.name);
     expect(business).not.toHaveProperty("containedInPlace");

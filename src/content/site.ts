@@ -33,6 +33,9 @@ export const site = {
   // cada despliegue).
   contentUpdatedAt: "2026-11-11",
   instagram: "https://www.instagram.com/psico.yerma/",
+  // Ficha de Google Business Profile (enlace canónico por CID). Es la misma
+  // entidad que el sitio: va como sameAs en el JSON-LD.
+  googleMapsUrl: "https://maps.google.com/?cid=14465603749844622233",
   contact: {
     whatsapp: "+56 9 4109 2678",
     email: "yermain.gonzalez7@gmail.com",
@@ -44,7 +47,7 @@ export const site = {
       commune: "Providencia",
       city: "Santiago",
       region: "Región Metropolitana",
-      postalCode: "7500000",
+      postalCode: "7511283",
       country: "CL",
       reference: "A pasos de Metro Pedro de Valdivia",
       // Aproximadas al edificio (geocodificación de la numeración).
