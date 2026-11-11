@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
 import { contact, contactForm, site } from "@/content/site";
 import { PageIntro } from "@/components/ui/PageIntro";
+import { ContactDetails } from "@/components/ui/ContactDetails";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { breadcrumbJsonLd, contactPageJsonLd } from "@/lib/structured-data";
+import { breadcrumbJsonLd, contactPageJsonLd, medicalBusinessJsonLd } from "@/lib/structured-data";
 import { ContactForm } from "@/features/contact/components/ContactForm";
 import { MailIcon, WhatsAppIcon } from "@/components/ui/icons";
 import { getMailtoHref, getWhatsappHref } from "@/features/contact/links";
 import {
   actionCardClass,
-  cardBodyClass,
   cardClass,
   cardTitleClass,
 } from "@/components/styles";
@@ -21,14 +21,20 @@ export const metadata: Metadata = pageMetadata({
 });
 
 export default function ContactPage() {
-  const { whatsapp, email, location } = site.contact;
+  const { whatsapp, email } = site.contact;
   const whatsappHref = getWhatsappHref();
   const mailtoHref = getMailtoHref();
   const turnstileSiteKey = process.env.TURNSTILE_SITE_KEY;
 
   return (
     <>
-      <JsonLd data={[contactPageJsonLd(), breadcrumbJsonLd("/contacto", contact.title)]} />
+      <JsonLd
+        data={[
+          contactPageJsonLd(),
+          medicalBusinessJsonLd(),
+          breadcrumbJsonLd("/contacto", contact.title),
+        ]}
+      />
       <PageIntro title={contact.title} intro={contact.intro} />
 
       <section className="mx-auto max-w-3xl space-y-4 px-6 pb-12">
@@ -64,12 +70,7 @@ export default function ContactPage() {
           </a>
         ) : null}
 
-        {location ? (
-          <div className={cardClass}>
-            <p className={cardTitleClass}>Ubicación</p>
-            <p className={`mt-2 ${cardBodyClass}`}>{location}</p>
-          </div>
-        ) : null}
+        <ContactDetails />
 
         <p className="pt-4 text-sm text-ink-soft">{contact.privacyNote}</p>
 

@@ -36,7 +36,27 @@ export const site = {
   contact: {
     whatsapp: "+56 9 4109 2678",
     email: "yermain.gonzalez7@gmail.com",
-    location: "",
+    location: {
+      // Box arrendado en Espacio Descubrirte. Se publica la dirección, pero el
+      // espacio no se declara como parte del negocio en el schema.
+      placeName: "Espacio Descubrirte",
+      street: "Av. Pedro de Valdivia 1860",
+      commune: "Providencia",
+      city: "Santiago",
+      region: "Región Metropolitana",
+      postalCode: "7500000",
+      country: "CL",
+      reference: "A pasos de Metro Pedro de Valdivia",
+      // Aproximadas al edificio (geocodificación de la numeración).
+      geo: { latitude: -33.4398571, longitude: -70.6069167 },
+    },
+    hours: {
+      inPerson: [
+        { label: "Viernes", days: ["Friday"], opens: "14:00", closes: "19:00" },
+        { label: "Sábado", days: ["Saturday"], opens: "09:00", closes: "14:00" },
+      ],
+      online: "Resto de la semana, con cita",
+    },
   },
 };
 

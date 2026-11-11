@@ -102,3 +102,37 @@ export function contactPageJsonLd() {
     },
   };
 }
+
+export function medicalBusinessJsonLd() {
+  const { location, hours, whatsapp, email } = site.contact;
+
+  return {
+    "@context": CONTEXT,
+    "@type": "MedicalBusiness",
+    name: site.name,
+    url: site.url,
+    telephone: whatsapp,
+    email,
+    image: `${site.url}/opengraph-image.png`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: location.street,
+      addressLocality: location.commune,
+      addressRegion: location.region,
+      postalCode: location.postalCode,
+      addressCountry: location.country,
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: location.geo.latitude,
+      longitude: location.geo.longitude,
+    },
+    openingHoursSpecification: hours.inPerson.map((slot) => ({
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: slot.days,
+      opens: slot.opens,
+      closes: slot.closes,
+    })),
+    sameAs: [site.instagram],
+  };
+}

@@ -4,6 +4,7 @@ import {
   breadcrumbJsonLd,
   contactPageJsonLd,
   faqJsonLd,
+  medicalBusinessJsonLd,
   personJsonLd,
   servicesJsonLd,
   websiteJsonLd,
@@ -85,5 +86,42 @@ describe("structured data", () => {
 
   it("usa la descripción de la profesional como texto del schema", () => {
     expect(personJsonLd().description).toBe(about.description);
+  });
+
+  it("declara el consultorio con dirección, teléfono y horario presencial", () => {
+    const business = medicalBusinessJsonLd();
+
+    expect(business["@type"]).toBe("MedicalBusiness");
+    expect(business.telephone).toBe(site.contact.whatsapp);
+    expect(business.address).toEqual({
+      "@type": "PostalAddress",
+      streetAddress: "Av. Pedro de Valdivia 1860",
+      addressLocality: "Providencia",
+      addressRegion: "Región Metropolitana",
+      postalCode: "7500000",
+      addressCountry: "CL",
+    });
+    expect(business.openingHoursSpecification).toEqual([
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Friday"],
+        opens: "14:00",
+        closes: "19:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Saturday"],
+        opens: "09:00",
+        closes: "14:00",
+      },
+    ]);
+  });
+
+  it("no mezcla el espacio arrendado como si fuera el negocio", () => {
+    const business = medicalBusinessJsonLd();
+
+    expect(business.name).toBe(site.name);
+    expect(business).not.toHaveProperty("containedInPlace");
+    expect(JSON.stringify(business)).not.toContain("Espacio Descubrirte");
   });
 });
