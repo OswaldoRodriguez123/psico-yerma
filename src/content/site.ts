@@ -124,6 +124,13 @@ export const services = {
   title: "Servicios",
   intro:
     "Estos son los espacios de acompañamiento disponibles. Si no sabes cuál necesitas, podemos conversarlo juntos.",
+  // Único precio publicado: el de la sesión de consulta. Los demás servicios
+  // se conversan en la primera entrevista, así que no llevan precio.
+  consultation: {
+    label: "Consulta",
+    price: 40000,
+    note: "Valor de la sesión de consulta.",
+  },
   items: [
     {
       title: "Evaluación psicológica infantil",

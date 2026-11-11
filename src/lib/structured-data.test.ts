@@ -117,8 +117,11 @@ describe("structured data", () => {
     ]);
   });
 
-  it("no mezcla el espacio arrendado como si fuera el negocio", () => {
-    const business = medicalBusinessJsonLd();
+  it("publica el precio de la consulta como rango de precio", () => {
+    expect(medicalBusinessJsonLd().priceRange).toBe("$40.000");
+  });
+
+  it("no mezcla el espacio arrendado como si fuera el negocio", () => {    const business = medicalBusinessJsonLd();
 
     expect(business.name).toBe(site.name);
     expect(business).not.toHaveProperty("containedInPlace");
