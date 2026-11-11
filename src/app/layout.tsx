@@ -16,6 +16,10 @@ export const metadata: Metadata = {
   },
   description: site.description,
   applicationName: site.name,
+  // Token público de Google Search Console (no es un secreto).
+  verification: {
+    google: "qa93kDl6um3XM5iNIgbKoCRwojSjXFcYFz4tJk5MzLU",
+  },
   authors: [{ name: site.professionalName }],
   creator: site.professionalName,
   openGraph: {
