@@ -1,7 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { home, site } from "@/content/site";
 import { Logo } from "@/components/layout/Logo";
 import { buttonClass, cardBodyClass, cardClass, cardTitleClass } from "@/components/styles";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function HomePage() {
   return (
