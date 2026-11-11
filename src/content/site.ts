@@ -36,6 +36,10 @@ export const site = {
   // Ficha de Google Business Profile (enlace canónico por CID). Es la misma
   // entidad que el sitio: va como sameAs en el JSON-LD.
   googleMapsUrl: "https://maps.google.com/?cid=14465603749844622233",
+  // Enlace para pedir reseñas. Abre la ficha, donde el botón "Escribir una
+  // opinión" queda a la vista. Si algún día se obtiene el enlace corto del
+  // panel ("Pedir opiniones"), se reemplaza solo esta línea.
+  googleReviewUrl: "https://www.google.com/maps?cid=14465603749844622233",
   contact: {
     whatsapp: "+56 9 4109 2678",
     email: "yermain.gonzalez7@gmail.com",
@@ -204,6 +208,10 @@ export const contact = {
     "Hola Yerma,\n\nMe gustaría recibir más información sobre tus servicios.\n\nGracias.",
   privacyNote:
     "Por tu privacidad, evita enviar información clínica o detalles sensibles a través de este sitio.",
+  reviewTitle: "Tu opinión ayuda",
+  reviewNote:
+    "Si ya te atendí, una reseña en Google ayuda a que otras familias encuentren este espacio.",
+  reviewCta: "Déjanos una reseña en Google",
 };
 
 export const contactForm = {
