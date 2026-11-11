@@ -6,7 +6,7 @@ const html = renderToStaticMarkup(<ReviewInvite />);
 
 describe("ReviewInvite", () => {
   it("enlaza a la ficha de Google de la profesional", () => {
-    expect(html).toContain("https://www.google.com/maps?cid=14465603749844622233");
+    expect(html).toContain("https://g.page/r/CZkbDOv3JcDIEBM/review");
     expect(html).toContain("reseña");
   });
 
