@@ -50,7 +50,7 @@ export const site = {
       commune: "Providencia",
       city: "Santiago",
       region: "Región Metropolitana",
-      postalCode: "7511283",
+      postalCode: "7500504",
       country: "CL",
       reference: "A pasos de Metro Pedro de Valdivia",
       // Aproximadas al edificio (geocodificación de la numeración).

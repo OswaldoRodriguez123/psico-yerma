@@ -98,7 +98,7 @@ describe("structured data", () => {
       streetAddress: "Av. Nueva Providencia 1860",
       addressLocality: "Providencia",
       addressRegion: "Región Metropolitana",
-      postalCode: "7511283",
+      postalCode: "7500504",
       addressCountry: "CL",
     });
     expect(business.openingHoursSpecification).toEqual([
