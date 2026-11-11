@@ -27,10 +27,10 @@ describe("securityHeaders", () => {
     expect(csp).toContain("base-uri 'self'");
   });
 
-  it("no abre conexiones ni imágenes a orígenes arbitrarios", () => {
+  it("deja que Turnstile hable con Cloudflare, sin abrir conexiones arbitrarias", () => {
     const csp = header("Content-Security-Policy");
 
-    expect(csp).toContain("connect-src 'self'");
+    expect(csp).toContain("connect-src 'self' https://challenges.cloudflare.com");
     expect(csp).not.toMatch(/(^|[\s;])https:([\s;]|$)/);
   });
 });
