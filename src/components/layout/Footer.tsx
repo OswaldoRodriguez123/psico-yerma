@@ -73,7 +73,7 @@ export function Footer() {
           © {new Date().getFullYear()} {site.professionalName} — {site.tagline}
         </p>
 
-        <ul className="flex w-full items-stretch justify-evenly sm:w-auto sm:items-center sm:justify-end sm:gap-3">
+        <ul className="flex w-full items-stretch justify-between sm:w-auto sm:items-center sm:justify-end sm:gap-3">
           {links.map(({ key, href, label, ariaLabel, title, Icon, external }) => (
             <li key={key} className="flex-none">
               <a
