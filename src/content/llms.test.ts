@@ -22,7 +22,10 @@ describe("llms.txt", () => {
 
     expect(urls.length).toBeGreaterThan(0);
     for (const url of urls) {
-      const allowed = url.startsWith(`${site.url}/`) || url === site.instagram;
+      const allowed =
+        url.startsWith(`${site.url}/`) ||
+        url === site.instagram ||
+        url === site.linkedin;
       expect(allowed, url).toBe(true);
     }
   });
@@ -30,6 +33,7 @@ describe("llms.txt", () => {
   it("incluye contacto y ubicación desde site", () => {
     expect(text).toContain(site.contact.email);
     expect(text).toContain(site.contact.whatsapp);
+    expect(text).toContain(site.linkedin);
     expect(text).toContain(site.contact.location.street);
     expect(text).toContain(site.contact.location.placeName);
   });

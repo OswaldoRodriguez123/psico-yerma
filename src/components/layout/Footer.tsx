@@ -1,7 +1,7 @@
 import type { ComponentType } from "react";
 import { contact, site } from "@/content/site";
 import { getMailtoHref, getWhatsappHref } from "@/features/contact/links";
-import { InstagramIcon, MailIcon, StarIcon, WhatsAppIcon } from "@/components/ui/icons";
+import { InstagramIcon, LinkedInIcon, MailIcon, StarIcon, WhatsAppIcon } from "@/components/ui/icons";
 
 type FooterLink = {
   key: string;
@@ -23,6 +23,13 @@ export function Footer() {
       href: site.instagram,
       label: "Instagram",
       Icon: InstagramIcon,
+      external: true,
+    },
+    {
+      key: "linkedin",
+      href: site.linkedin,
+      label: "LinkedIn",
+      Icon: LinkedInIcon,
       external: true,
     },
   ];
