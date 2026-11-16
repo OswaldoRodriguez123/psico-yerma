@@ -113,6 +113,10 @@ Deployed on Vercel with Supabase as the database. Set the environment variables
 in the host. A daily cron hits `/api/keepalive` so the free Supabase project does
 not pause after inactivity.
 
+The public URL is `site.url` in `src/content/site.ts`. Canonical tags, sitemap,
+robots, JSON-LD, Open Graph and `/llms.txt` are all derived from it, so changing
+the domain (or the brand name) is a one-line edit there.
+
 ## License
 
 MIT for the code. See [LICENSE](LICENSE). The brand, copy and images belong to
