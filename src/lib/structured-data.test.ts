@@ -29,7 +29,11 @@ describe("structured data", () => {
       name: site.professionalName,
       url: site.url,
     });
-    expect(person.sameAs).toEqual([site.instagram, site.googleMapsUrl]);
+    expect(person.sameAs).toEqual([
+      site.instagram,
+      site.linkedin,
+      site.googleMapsUrl,
+    ]);
     expect(person).not.toHaveProperty("address");
     expect(person).not.toHaveProperty("telephone");
   });
@@ -124,6 +128,7 @@ describe("structured data", () => {
   it("enlaza la ficha de Google como mismo negocio", () => {
     expect(medicalBusinessJsonLd().sameAs).toEqual([
       site.instagram,
+      site.linkedin,
       site.googleMapsUrl,
     ]);
   });

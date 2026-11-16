@@ -31,8 +31,10 @@ export const site = {
   // Fecha de la última edición de este archivo. Alimenta el <lastmod> del
   // sitemap: es una fecha editable a mano, no la del build (que mentiría en
   // cada despliegue).
-  contentUpdatedAt: "2026-11-11",
+  contentUpdatedAt: "2026-11-16",
   instagram: "https://www.instagram.com/psico.yerma/",
+  linkedin:
+    "https://www.linkedin.com/in/yermain-gonzález-cisneros-87439a79",
   // Ficha de Google Business Profile (enlace canónico por CID). Es la misma
   // entidad que el sitio: va como sameAs en el JSON-LD.
   googleMapsUrl: "https://maps.google.com/?cid=14465603749844622233",

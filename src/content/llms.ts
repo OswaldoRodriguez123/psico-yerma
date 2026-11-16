@@ -73,6 +73,7 @@ export function renderLlms(): string {
     `- Correo: ${email}`,
     `- WhatsApp: ${whatsapp}`,
     `- Instagram: ${site.instagram}`,
+    `- LinkedIn: ${site.linkedin}`,
     "",
     "## Dónde y cuándo",
     "",
