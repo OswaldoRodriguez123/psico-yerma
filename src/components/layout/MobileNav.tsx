@@ -98,7 +98,7 @@ export function MobileNav() {
         id={panelId}
         popover={native ? "auto" : undefined}
         hidden={native ? undefined : !manualOpen}
-        aria-label="Navegación principal"
+        aria-label="Menú"
         className="fixed inset-x-0 top-20 bottom-auto z-50 m-0 max-h-[calc(100dvh-5rem)] w-full max-w-full overflow-y-auto border-t border-border bg-surface p-0 text-ink shadow-sm"
       >
         <ul className="mx-auto max-w-5xl space-y-1 px-6 py-4 text-base font-semibold">
