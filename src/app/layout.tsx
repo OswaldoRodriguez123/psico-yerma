@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
 import { site } from "@/content/site";
@@ -35,6 +35,16 @@ export const metadata: Metadata = {
     title: `${site.name} | ${site.tagline}`,
     description: site.description,
   },
+  // Opt-in explícito para que el navegador móvil respete el tamaño de texto del
+  // sistema: el layout refluye a 200 % sin scroll horizontal.
+  other: { "text-scale": "scale" },
+};
+
+// El sitio tiene una sola paleta clara, así que el esquema es `light` y no
+// `light dark`: scrollbars, controles nativos y campos se pintan en claro.
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#fdfbf7",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

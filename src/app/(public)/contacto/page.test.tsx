@@ -8,4 +8,9 @@ describe("página de contacto", () => {
   it("muestra el formulario de contacto", () => {
     expect(html).toContain("Envíame un mensaje");
   });
+
+  it("deja que el correo se parta en vez de desbordar la tarjeta", () => {
+    expect(html).toContain("min-w-0");
+    expect(html).toContain("break-words");
+  });
 });

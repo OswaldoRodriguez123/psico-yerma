@@ -1,5 +1,5 @@
 export const buttonClass =
-  "cursor-pointer rounded-full border border-primary bg-primary-soft px-6 py-3 font-semibold text-ink-soft transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60";
+  "max-w-full cursor-pointer rounded-full border border-primary bg-primary-soft px-6 py-3 text-center font-semibold break-words text-ink-soft transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60";
 
 export const dangerButtonClass =
   "cursor-pointer rounded-full border border-danger bg-danger-soft px-6 py-3 font-semibold text-danger transition hover:brightness-95 disabled:cursor-not-allowed disabled:opacity-60";
