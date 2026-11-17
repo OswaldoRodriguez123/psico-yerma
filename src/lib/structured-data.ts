@@ -1,5 +1,4 @@
 import { about, contact, faq, services, site } from "@/content/site";
-import { formatClp } from "./format";
 
 const CONTEXT = "https://schema.org";
 
@@ -135,7 +134,6 @@ export function medicalBusinessJsonLd() {
       opens: slot.opens,
       closes: slot.closes,
     })),
-    priceRange: formatClp(services.consultation.price),
     sameAs: [site.instagram, site.linkedin, site.googleMapsUrl],
   };
 }

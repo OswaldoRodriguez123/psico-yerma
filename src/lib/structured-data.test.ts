@@ -121,8 +121,8 @@ describe("structured data", () => {
     ]);
   });
 
-  it("publica el precio de la consulta como rango de precio", () => {
-    expect(medicalBusinessJsonLd().priceRange).toBe("$40.000");
+  it("no publica un precio de la consulta", () => {
+    expect(medicalBusinessJsonLd()).not.toHaveProperty("priceRange");
   });
 
   it("enlaza la ficha de Google como mismo negocio", () => {
