@@ -15,7 +15,8 @@ describe("footer", () => {
     expect(html).toContain("text-[0.625rem]");
   });
 
-  it("solo se fija al borde inferior desde tablet", () => {
+  it("en móvil vive pegada al borde con sticky (sin solapar contenido); desde tablet queda fija", () => {
+    expect(html).toContain("sticky bottom-0");
     expect(html).toContain("sm:fixed");
     expect(html).not.toMatch(/class="fixed inset-x-0/);
   });

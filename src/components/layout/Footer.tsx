@@ -67,7 +67,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="z-40 border-t border-border bg-primary-soft sm:fixed sm:inset-x-0 sm:bottom-0">
+    <footer className="sticky bottom-0 z-40 border-t border-border bg-primary-soft sm:fixed sm:inset-x-0 sm:bottom-0">
       <div className="mx-auto flex min-h-16 max-w-5xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-6 py-2 sm:h-16 sm:flex-nowrap sm:py-0">
         <p className="hidden text-sm text-ink-soft sm:block">
           © {new Date().getFullYear()} {site.professionalName} — {site.tagline}
