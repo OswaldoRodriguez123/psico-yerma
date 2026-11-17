@@ -45,11 +45,13 @@ export default function ContactPage() {
             className={actionCardClass}
           >
             <WhatsAppIcon className="h-8 w-8 shrink-0 text-ink" />
-            <span>
+            <span className="min-w-0 break-words">
               <span className="block font-bold text-ink">
                 {contact.whatsappCta}
               </span>
-              <span className="block text-sm text-ink-soft">{whatsapp}</span>
+              <span className="block text-sm text-ink-soft">
+                {whatsapp}
+              </span>
             </span>
           </a>
         ) : null}
@@ -60,11 +62,13 @@ export default function ContactPage() {
             className={actionCardClass}
           >
             <MailIcon className="h-8 w-8 shrink-0 text-ink" />
-            <span>
+            <span className="min-w-0 break-words">
               <span className="block font-bold text-ink">
                 {contact.emailCta}
               </span>
-              <span className="block text-sm text-ink-soft">{email}</span>
+              <span className="block text-sm text-ink-soft">
+                {email}
+              </span>
             </span>
           </a>
         ) : null}

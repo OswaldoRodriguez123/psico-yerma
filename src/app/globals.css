@@ -13,6 +13,10 @@
  * Semanticos  -> solo estados de exito y error
  */
 :root {
+  /* Una sola paleta clara: se lo decimos al navegador para que pinte
+     scrollbars, controles nativos y campos de formulario en claro. */
+  color-scheme: light;
+
   /* Neutros */
   --brand-cream: #fdfbf7;
   --brand-surface: #ffffff;
@@ -53,6 +57,27 @@ body {
   background-color: var(--color-cream);
   color: var(--color-ink);
   font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/*
+ * A 200 % de texto una palabra larga ("Acompañamiento", un correo) no cabe en
+ * una tarjeta angosta. `anywhere` deja que se parta y, a diferencia de
+ * `break-word`, también reduce el min-content: sin eso la tarjeta empuja el
+ * ancho de su columna y aparece scroll horizontal.
+ */
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+p,
+li,
+blockquote,
+summary {
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
 }
 
 dialog::backdrop {

@@ -20,14 +20,14 @@ export default function AboutPage() {
       <PageIntro title={about.title} intro={about.intro} />
 
       <section className="mx-auto grid max-w-4xl gap-8 px-6 pb-10 sm:grid-cols-[240px_1fr]">
-        <div className="relative mx-auto aspect-[3/4] w-52 overflow-hidden rounded-2xl sm:w-full">
+        <div className="relative mx-auto aspect-[3/4] w-full max-w-52 overflow-hidden rounded-2xl sm:max-w-none">
           <Image
             src="/images/retrato.jpg"
             alt={site.professionalName}
             width={240}
             height={320}
             priority
-            sizes="(min-width: 640px) 240px, 208px"
+            sizes="(min-width: 640px) 240px, min(13rem, calc(100vw - 3rem))"
             className="h-full w-full object-cover"
           />
         </div>
