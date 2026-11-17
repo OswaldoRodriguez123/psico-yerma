@@ -14,7 +14,7 @@ export default function HomePage() {
   return (
     <>
       <JsonLd data={[websiteJsonLd(), personJsonLd(), medicalBusinessJsonLd()]} />
-      <section className="mx-auto flex max-w-3xl flex-col items-center px-6 pt-16 pb-12 text-center">
+      <section className="mx-auto flex max-w-3xl flex-col items-center px-6 pt-8 pb-12 text-center sm:pt-16">
         <Logo className="h-28 w-auto" />
         <p className="mt-6 text-sm font-semibold tracking-widest text-ink-soft uppercase">
           {site.tagline}
